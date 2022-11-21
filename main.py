@@ -2,15 +2,18 @@
 # ----- Importa e inicia pacotes
 import pygame
 
-pygame.init()
+pygame.init() 
 
 # ----- Gera tela principal
 window = pygame.display.set_mode((480, 650))
-pygame.display.set_caption('Hello World!')
+pygame.display.set_caption('Spikes!')
 
 # ----- Inicia estruturas de dados
 game = True
 
+# ---- Inicia assets 
+espinho = pygame.image.load('assets/img/logo-madfox.png').convert()
+espinho = pygame.transform.scale(espinho, (15, 15))
 # ===== Loop principal =====
 while game:
     # ----- Trata eventos
@@ -20,12 +23,9 @@ while game:
             game = False
 
     # ----- Gera saídas
-    window.fill((194, 175, 181))  # Preenche com a cor branca
+    window.fill((194, 175, 181))  # Preenche com a cor cinza
+    window.blit(espinho, (10, 10))
 
-    vertices = [(0, 0), (15, 15), (0, 30)]
-    pygame.draw.polygon(window,(0,0,0), vertices )
-
-    #(173,172,153)
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
