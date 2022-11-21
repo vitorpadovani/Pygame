@@ -12,8 +12,9 @@ pygame.display.set_caption('Spikes!')
 game = True
 
 # ---- Inicia assets 
-espinho = pygame.image.load('assets/img/logo-madfox.png').convert()
-espinho = pygame.transform.scale(espinho, (15, 15))
+espinho = pygame.image.load('assets/img/espinho.png').convert_alpha()
+espinho = pygame.transform.scale(espinho, (30, 30))
+
 # ===== Loop principal =====
 while game:
     # ----- Trata eventos
@@ -24,7 +25,8 @@ while game:
 
     # ----- Gera saídas
     window.fill((194, 175, 181))  # Preenche com a cor cinza
-    window.blit(espinho, (10, 10))
+    window.blit(espinho, (0, 0))
+
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
