@@ -4,6 +4,8 @@ import pygame
 import random
 
 pygame.init() 
+pygame.mixer.init()
+
 
 # ----- Gera tela principal
 WIDTH = 480
@@ -28,7 +30,11 @@ espinho_img_baixo = pygame.image.load('assets/img/espinho_pra_baixo.png').conver
 espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (40, 40))
 background = pygame.image.load('assets/img/fundo.png').convert()
 
-
+pygame.mixer.music.load('assets/sounds/M72VSQV-games-logo.mp3')
+pygame.mixer.music.set_volume(0.4)
+pulo_sound = pygame.mixer.Sound('assets/sounds/mixkit-player-jumping-in-a-video-game-2043.wav')
+perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-471.wav')
+bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
     def __init__(self,espinho_img_e):
@@ -119,6 +125,7 @@ all_sprites.add(all_espinhos_cima)
 all_sprites.add(all_espinhos_baixo)
 
 # ===== Loop principal =====
+pygame.mixer.music.play(loops=-1)
 while game:
     # ----- Trata eventos
     for event in pygame.event.get():
