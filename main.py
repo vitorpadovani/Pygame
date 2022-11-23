@@ -13,12 +13,16 @@ window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
 # ---- Inicia assets 
-espinho_img = pygame.image.load('assets/img/espinho.png').convert_alpha()
-espinho_img = pygame.transform.scale(espinho_img, (40, 40))
+espinho_img_e = pygame.image.load('assets/img/espinho.png').convert_alpha()
+espinho_img_e = pygame.transform.scale(espinho_img_e, (40, 40))
 
-class Espinho(pygame.sprite.Sprite):
-    def __init__(self,espinho_img):
-        self.image = espinho_img
+espinho_img_d = pygame.image.load('assets/img/espinho pro lado.png').convert_alpha()
+espinho_img_d = pygame.transform.scale(espinho_img_d, (40, 40))
+
+
+class Espinho_lado_esquerdo(pygame.sprite.Sprite):
+    def __init__(self,espinho_img_e):
+        self.image = espinho_img_e
         pygame.sprite.Sprite.__init__(self)
 
         # Atualizando a posição do espinho
@@ -28,15 +32,43 @@ class Espinho(pygame.sprite.Sprite):
         self.rect.y = random.randint(0, HEIGHT)
 
 
+class Espinho_lado_direito(pygame.sprite.Sprite):
+    def __init__(self,espinho_img_d):
+        self.image = espinho_img_d
+        pygame.sprite.Sprite.__init__(self)
+
+        # Atualizando a posição do espinho
+        # Sorteando a posição do espinho
+        self.rect = self.image.get_rect()
+        self.rect.x = 440
+        self.rect.y = random.randint(0, HEIGHT)
+
+
+
 # Criando um grupo de meteoros
-all_espinhos = pygame.sprite.Group()
+all_sprites = pygame.sprite.Group()
+all_espinhos_e = pygame.sprite.Group()
+all_espinhos_d = pygame.sprite.Group()
+
 # Criando os meteoros
-for i in range(3):
-    espinho = Espinho(espinho_img)
-    all_espinhos.add(espinho)
+while len(all_espinhos_e) < 4:
+    espinho = Espinho_lado_esquerdo(espinho_img_e)
+    hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
+    if len(hits) == 0:
+        all_espinhos_e.add(espinho)
+
+
+# Criando os meteoros
+while len(all_espinhos_d) < 4:
+    espinho = Espinho_lado_direito(espinho_img_e)
+    hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+    if len(hits) == 0:
+        all_espinhos_d.add(espinho)
 # ----- Inicia estruturas de dados
 game = True
 
+all_sprites.add(all_espinhos_e)
+all_sprites.add(all_espinhos_d)
 
 # ===== Loop principal =====
 while game:
@@ -50,8 +82,7 @@ while game:
     window.fill((194, 175, 181))  # Preenche com a cor cinza
     window.blit(window, (0, 0))
     # Desenha os espinhos
-    all_espinhos.draw(window)
-
+    all_sprites.draw(window)
     
 
     # ----- Atualiza estado do jogo
