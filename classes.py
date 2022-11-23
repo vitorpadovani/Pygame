@@ -21,10 +21,26 @@ background = pygame.image.load('assets/img/fundo.png').convert()
 game = True
 # Variável para o ajuste de velocidade
 clock = pygame.time.Clock()
-FPS = 15
+FPS = 18
 
 # ===== Loop principal =====
 aplica_gravidade = False
+
+
+
+
+class Bird(pygame.sprite.Sprite):
+    def __init__(self,bird_img):
+        self.image = bird_img
+        pygame.sprite.Sprite.__init__(self)
+
+        # Atualizando a posição do espinho
+        # Sorteando a posição do espinho
+        self.rect = self.image.get_rect()
+        self.rect.x = (WIDTH/2)
+        self.rect.y =  HEIGHT/2
+
+
 
 #Velocidade inicial do passaro
 bird_speed_x = 0

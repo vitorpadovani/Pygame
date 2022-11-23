@@ -26,7 +26,13 @@ espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
 
 espinho_img_baixo = pygame.image.load('assets/img/espinho_pra_baixo.png').convert_alpha()
 espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (40, 40))
-background = pygame.image.load('assets/img/fundo.png').convert()
+
+background = pygame.image.load('assets/img/fundo1.png').convert()
+background = pygame.transform.scale(background, (480, 650))
+background2 = pygame.image.load('assets/img/fundo2.png').convert()
+background2 = pygame.transform.scale(background2, (480, 650))
+background3 = pygame.image.load('assets/img/fundo3.png').convert()
+background3 = pygame.transform.scale(background3, (480, 650))
 
 
 
@@ -40,7 +46,6 @@ class Espinho_lado_esquerdo(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = random.randint(40, HEIGHT-40)
-
 
 class Espinho_lado_direito(pygame.sprite.Sprite):
     def __init__(self,espinho_img_d):
