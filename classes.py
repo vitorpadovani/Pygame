@@ -12,14 +12,15 @@ HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Exemplo de pula')
 WIDTH_bird = 50
-HEIGHT_bird = 100
+HEIGHT_bird = 60
 
 
 # ----- Inicia assets
 background = pygame.image.load('assets/img/fundo.png').convert()
 bird_img = pygame.image.load('assets/img/bird.png').convert_alpha()
 bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
-
+bird_img2 = pygame.image.load('assets/img/bird2.png').convert_alpha()
+bird_img2 = pygame.transform.scale(bird_img2, (HEIGHT_bird, WIDTH_bird))
 
 # ----- Inicia estruturas de dados
 game = True
@@ -44,6 +45,9 @@ class Bird(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = (WIDTH/2)
         self.rect.y =  HEIGHT/2
+        #Velocidade inicial do passaro
+        bird_speed_x = 0
+        bird_speed_y = 0
 
 
 
