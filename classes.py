@@ -64,6 +64,10 @@ bird_y = HEIGHT/2
 ACELERACAO = 0.8
 
 print('aperte espaço para pular com a bola')
+
+
+
+
 while game:
     clock.tick(FPS)
 
