@@ -22,7 +22,12 @@ espinho_img_d = pygame.transform.flip(espinho_img_d, True,True)
 
 
 espinho_img_cima = pygame.image.load('assets/img/espinho_pra_cima.png').convert_alpha()
-espinho_img_cima = espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
+espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
+
+espinho_img_baixo = pygame.image.load('assets/img/espinho_pra_baixo.png').convert_alpha()
+espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (40, 40))
+background = pygame.image.load('assets/img/fundo.png').convert()
+
 
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
@@ -49,18 +54,25 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         self.rect.x = 440
         self.rect.y = random.randint(40, HEIGHT-40)
 
-lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
-
 class Espinho_pra_cima(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_cima):
+    def __init__(self,espinho_img_cima,x):
         self.image = espinho_img_cima 
         pygame.sprite.Sprite.__init__(self)
 
         # Adicionando a posição do espinho
         self.rect = self.image.get_rect()
-        for i in range(0,len(lista_esp_cima)):
-            self.rect.x = lista_esp_cima[i]
-            self.rect.y = 610
+        self.rect.x = x
+        self.rect.y = 610
+
+class Espinho_pra_baixo(pygame.sprite.Sprite):
+    def __init__(self,espinho_img_baixo,x):
+        self.image = espinho_img_baixo
+        pygame.sprite.Sprite.__init__(self)
+
+        # Adicionando a posição do espinho
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = 0
 
 
 # Criando um grupo de meteoros
@@ -68,7 +80,7 @@ all_sprites = pygame.sprite.Group()
 all_espinhos_e = pygame.sprite.Group()
 all_espinhos_d = pygame.sprite.Group()
 all_espinhos_cima = pygame.sprite.Group()
-
+all_espinhos_baixo = pygame.sprite.Group()
 
 # Criando os espinhod da parede 1
 while len(all_espinhos_e) < 4:
@@ -86,9 +98,17 @@ while len(all_espinhos_d) < 4:
         all_espinhos_d.add(espinho)
 
 # Criando os espinhos virados pra cima
-while len(all_espinhos_cima) < len(lista_esp_cima):
-    espinho = Espinho_pra_cima(espinho_img_cima)
+lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
+for i in range(0,len(lista_esp_cima)):
+    x = lista_esp_cima[i]
+    espinho = Espinho_pra_cima(espinho_img_cima, x)
     all_espinhos_cima.add(espinho)
+
+# Criando os espinhos virados pra baixo
+for i in range(0,len(lista_esp_cima)):
+    x = lista_esp_cima[i]
+    espinho = Espinho_pra_baixo(espinho_img_baixo, x)
+    all_espinhos_baixo.add(espinho)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -96,6 +116,7 @@ game = True
 all_sprites.add(all_espinhos_e)
 all_sprites.add(all_espinhos_d)
 all_sprites.add(all_espinhos_cima)
+all_sprites.add(all_espinhos_baixo)
 
 # ===== Loop principal =====
 while game:
