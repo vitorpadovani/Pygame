@@ -74,6 +74,7 @@ class Bird(pygame.sprite.Sprite):
             self.rect.y += self.bird_speed_y
             self.rect.x += self.bird_speed_x
 
+
             
         #Quando bater na parede
         if self.rect.x + WIDTH_bird >= 480:
