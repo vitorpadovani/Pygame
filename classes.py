@@ -50,7 +50,10 @@ while game:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 bird_speed_y = -17
-                bird_speed_x = 17
+                if bird_speed_x < 0:
+                    bird_speed_x = -17
+                else:
+                    bird_speed_x = 17
                 aplica_gravidade = True
 
     # ----- Atualiza estado do jogo
