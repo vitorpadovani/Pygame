@@ -17,16 +17,17 @@ HEIGHT_bird = 60
 
 # ----- Inicia assets
 background = pygame.image.load('assets/img/fundo.png').convert()
-bird_img = pygame.image.load('assets/img/bird.png').convert_alpha()
-bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
+bird_img1 = pygame.image.load('assets/img/bird.png').convert_alpha()
+bird_img1 = pygame.transform.scale(bird_img1, (HEIGHT_bird, WIDTH_bird))
 bird_img2 = pygame.image.load('assets/img/bird2.png').convert_alpha()
 bird_img2 = pygame.transform.scale(bird_img2, (HEIGHT_bird, WIDTH_bird))
+bird_img = pygame.image.load('assets/img/bird.png').convert_alpha()
+bird_img = pygame.transform.scale(bird_img1, (HEIGHT_bird, WIDTH_bird))
 
 # ----- Inicia estruturas de dados
 game = True
 # Variável para o ajuste de velocidade
 clock = pygame.time.Clock()
-FPS = 18
 FPS = 40
 
 # ===== Loop principal =====
@@ -93,10 +94,12 @@ while game:
     if bird_x + WIDTH_bird >= 480:
         bird_speed_x *= -1
         bird_x += bird_speed_x
+        bird_img = bird_img2
 
     elif bird_x <= 0:
         bird_speed_x *= -1
         bird_x += bird_speed_x
+        bird_img = bird_img1
 
 
     # ----- Gera saídas
