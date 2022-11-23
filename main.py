@@ -86,7 +86,7 @@ while len(all_espinhos_d) < 4:
         all_espinhos_d.add(espinho)
 
 # Criando os espinhos virados pra cima
-while len(all_espinhos_cima) < 12:
+while len(all_espinhos_cima) < len(lista_esp_cima):
     espinho = Espinho_pra_cima(espinho_img_cima)
     all_espinhos_cima.add(espinho)
 
