@@ -98,7 +98,7 @@ ACELERACAO = 0.8
 print('aperte espaço para pular com a bola')
 
 all_sprites = pygame.sprite.Group()
-player = Bird(bird_img)
+player = Bird(bird_img_esq, bird_img_dir)
 all_sprites.add(player)
 while game:
     clock.tick(FPS)
