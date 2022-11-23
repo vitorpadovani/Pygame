@@ -34,27 +34,39 @@ FPS = 40
 aplica_gravidade = False
 
 
-
-
 class Bird(pygame.sprite.Sprite):
-    def __init__(self,bird_img):
-        self.image = bird_img
+    def __init__(self, bird_img_dir, bird_img_esq):
+        # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
-        # Atualizando a posição do espinho
-        # Sorteando a posição do espinho
+        self.image = bird_img_dir
+        self.image_dir = bird_img_dir
+        self.image_esq = bird_img_esq
         self.rect = self.image.get_rect()
-        self.rect.x = (WIDTH/2)
-        self.rect.y =  HEIGHT/2
-        #Velocidade inicial do passaro
-        bird_speed_x = 0
-        bird_speed_y = 0
+        self.rect.centerx = WIDTH / 2
+        self.rect.bottom = HEIGHT - 10
+        self.bird_speed_x = 0
+        self.bird_speed_y = 0 
 
+    def update(self):
+        # Atualização da posição da nave
+        self.rect.x += self.speedx
 
+        # Mantem dentro da tela
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left < 0:
+            self.rect.left = 0
+        
+        if self.rect.x + self.rect.width >= 480:
+            bird_speed_x *= -1
+            bird_x += bird_speed_x
+            bird_img = bird_img2
+        if bird_x <= 0:
+            bird_speed_x *= -1
+            bird_x += bird_speed_x
+            bird_img = bird_img1
 
-#Velocidade inicial do passaro
-bird_speed_x = 0
-bird_speed_y = 0
 
 #posição inicial do passaro
 bird_x = (WIDTH/2)
