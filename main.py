@@ -127,8 +127,9 @@ while game:
             game = False
 
     # ----- Gera saídas
-    window.fill((194, 175, 181))  # Preenche com a cor cinza
-    window.blit(window, (0, 0))
+    window.fill((0, 0, 0))  # Preenche com a cor branca
+    window.blit(background, (0, 0))
+   # window.blit(meteor_img_small, (meteor_x, meteor_y))
     # Desenha os espinhos
     all_sprites.draw(window)
     
