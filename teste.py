@@ -14,3 +14,7 @@ perdeu_sound.play()
 
 #pq esta em uma lista os sons no handout 20 
 #linha 226 como saber qual som eh
+
+
+
+
