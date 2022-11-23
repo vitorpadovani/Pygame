@@ -1,19 +1,25 @@
 # ===== Inicialização =====
 # ----- Importa e inicia pacotes
 import pygame
+import random
 
 pygame.init() 
 
 # ----- Gera tela principal
-window = pygame.display.set_mode((480, 650))
+WIDTH = 480
+HEIGHT = 600
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
-
-# ----- Inicia estruturas de dados
-game = True
 
 # ---- Inicia assets 
 espinho = pygame.image.load('assets/img/espinho.png').convert_alpha()
 espinho = pygame.transform.scale(espinho, (30, 30))
+background = pygame.image.load('assets/img/starfield.png').convert()
+
+
+# ----- Inicia estruturas de dados
+game = True
+
 
 # ===== Loop principal =====
 while game:
