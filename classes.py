@@ -10,9 +10,9 @@ pygame.init()
 WIDTH = 480
 HEIGHT = 600
 window = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption('Exemplo de pula')
-WIDTH_bird = 50
-HEIGHT_bird = 60
+pygame.display.set_caption('BIRD')
+WIDTH_bird = 45
+HEIGHT_bird = 55
 
 
 # ----- Inicia assets
@@ -60,83 +60,57 @@ class Bird(pygame.sprite.Sprite):
         if self.rect.left < 0:
             self.rect.left = 0
         
+        #Quando bater na parede
         if self.rect.x + self.rect.width >= 480:
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
             bird_img = bird_img_esq
-
         if self.rect.x <= 0:
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
             bird_img = bird_img_dir
+
         if aplica_gravidade:
             self.bird_speed_y += ACELERACAO
             self.rect.y += self.bird_speed_y
             self.rect.x += self.bird_speed_x
 
-            
-        #Quando bater na parede
-        if self.rect.x + WIDTH_bird >= 480:
-            self.bird_speed_x *= -1
-            self.rect.x += self.bird_speed_x
-            bird_img = bird_img_esq
-
-        elif self.bird_speed_x <= 0:
-            self.bird_speed_x *= -1
-            self.rect.x += self.bird_speed_x
-            bird_img = bird_img_dir
-        bird_x = self.rect.x
-
 
 #posição inicial do passaro
-# bird_x = (WIDTH/2)
-# bird_y = HEIGHT/2
+bird_x = (WIDTH/2)
+bird_y = HEIGHT/2
 
 # Gravidade aplicada a cada frame 
 ACELERACAO = 0.8
 
-print('aperte espaço para pular com a bola')
+print('aperte espaço para pular')
 
 all_sprites = pygame.sprite.Group()
 player = Bird(bird_img_esq, bird_img_dir)
 all_sprites.add(player)
+
 while game:
     clock.tick(FPS)
 
     # ----- Trata eventos
     for event in pygame.event.get():
+
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
 
         if event.type == pygame.KEYDOWN:
-             if event.key == pygame.K_SPACE:
-                 bird_speed_y = -8
-                 if bird_speed_x < 0:
-                     bird_speed_x = -8
-                 else:
-                     bird_speed_x = 8
-        aplica_gravidade = True
+            if event.key == pygame.K_SPACE:
+                player.bird_speed_y = -5
+                if player.bird_speed_x < 0:
+                    player.bird_speed_x = -5
+                else:
+                    player.bird_speed_x = 5
+            aplica_gravidade = True
 
     # ----- Atualiza estado do jogo
-    #aplicando gravidade
-    # if aplica_gravidade:
-    #     bird_speed_y += ACELERACAO
-    #     bird_y += bird_speed_y
-    #     bird_x += bird_speed_x
-
-        
-    # #Quando bater na parede
-    # if bird_x + WIDTH_bird >= 480:
-    #     bird_speed_x *= -1
-    #     bird_x += bird_speed_x
-    #     bird_img = bird_img2
-
-    # elif bird_x <= 0:
-    #     bird_speed_x *= -1
-    #     bird_x += bird_speed_x
-    #     bird_img = bird_img1
-
+    all_sprites.update()
+    
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
