@@ -44,7 +44,7 @@ class Bird(pygame.sprite.Sprite):
         self.image_esq = bird_img_esq
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 10
+        self.rect.bottom = HEIGHT/2
         self.bird_speed_x = 0
         self.bird_speed_y = 0 
 
@@ -110,7 +110,7 @@ while game:
 
     # ----- Atualiza estado do jogo
     all_sprites.update()
-    
+
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
