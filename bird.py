@@ -33,6 +33,8 @@ FPS = 40
 # ===== Loop principal =====
 aplica_gravidade = False
 
+# Gravidade aplicada a cada frame 
+ACELERACAO = 0.8
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
@@ -43,39 +45,19 @@ class Bird(pygame.sprite.Sprite):
         self.image_dir = bird_img_dir
         self.image_esq = bird_img_esq
         self.rect = self.image.get_rect()
-        self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 10
+
+        #posição inicial da bola
+        self.rect.centerx = (WIDTH/2)
+        self.rect.bottom = HEIGHT/2
+
         self.bird_speed_x = 0
         self.bird_speed_y = 0 
 
     def update(self):
-        # Atualização da posição da nave
+        # Atualização da posição do passaro
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
-        # Mantem dentro da tela
-        if self.rect.right > WIDTH:
-            self.rect.right = WIDTH
-
-        if self.rect.left < 0:
-            self.rect.left = 0
-        
-        if self.rect.x + self.rect.width >= 480:
-            self.bird_speed_x *= -1
-            self.rect.x += self.bird_speed_x
-            bird_img = bird_img_esq
-
-        if self.rect.x <= 0:
-            self.bird_speed_x *= -1
-            self.rect.x += self.bird_speed_x
-            bird_img = bird_img_dir
-        if aplica_gravidade:
-            self.bird_speed_y += ACELERACAO
-            self.rect.y += self.bird_speed_y
-            self.rect.x += self.bird_speed_x
-
-
-            
         #Quando bater na parede
         if self.rect.x + WIDTH_bird >= 480:
             self.bird_speed_x *= -1
@@ -86,20 +68,17 @@ class Bird(pygame.sprite.Sprite):
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
             bird_img = bird_img_dir
-        bird_x = self.rect.x
+            bird_x = self.rect.x
 
-
-#posição inicial do passaro
-# bird_x = (WIDTH/2)
-# bird_y = HEIGHT/2
-
-# Gravidade aplicada a cada frame 
-ACELERACAO = 0.8
+        if aplica_gravidade:
+            self.bird_speed_y += ACELERACAO
+            self.rect.y += self.bird_speed_y
+            self.rect.x += self.bird_speed_x
 
 print('aperte espaço para pular com a bola')
 
 all_sprites = pygame.sprite.Group()
-player = Bird(bird_img)
+player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 while game:
     clock.tick(FPS)
@@ -112,12 +91,18 @@ while game:
 
         if event.type == pygame.KEYDOWN:
              if event.key == pygame.K_SPACE:
-                 bird_speed_y = -8
-                 if bird_speed_x < 0:
-                     bird_speed_x = -8
-                 else:
-                     bird_speed_x = 8
+                player.bird_speed_y = -8
+                if player.bird_speed_x < 0:
+                    player.bird_speed_x = -8
+                else:
+                    player.bird_speed_x = 8
         aplica_gravidade = True
+    # ----- Atualiza estado do jogo
+    #aplicando gravidade
+        if aplica_gravidade:
+            player.bird_speed_y += ACELERACAO
+            player.rect.y += player.bird_speed_y
+            player.rect.x += player.bird_speed_x
 
     # ----- Atualiza estado do jogo
     #aplicando gravidade
