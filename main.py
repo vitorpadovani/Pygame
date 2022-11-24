@@ -10,9 +10,12 @@ pygame.mixer.init()
 # ----- Gera tela principal
 WIDTH = 480
 HEIGHT = 650
+WIDTH_bala = 40
+HEIGHT_bala = 40
 window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
+
 
 # ---- Inicia assets 
 espinho_img_e = pygame.image.load('assets/img/espinho.png').convert_alpha()
@@ -28,6 +31,17 @@ espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
 
 espinho_img_baixo = pygame.image.load('assets/img/espinho_pra_baixo.png').convert_alpha()
 espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (40, 40))
+
+img_bala_azul = pygame.image.load('assets/img/balaazul.png').convert_alpha()
+img_bala_preta = pygame.image.load('assets/img/balapreta.png').convert_alpha() 
+img_bala_rosa = pygame.image.load('assets/img/balarosa.png').convert_alpha()
+img_bala_roxa = pygame.image.load('assets/img/balaroxa.png').convert_alpha()
+img_bala_laranja = pygame.image.load('assets/img/balalaranja.png').convert_alpha()
+img_bala_azul = pygame.transform.scale(img_bala_azul, (HEIGHT_bala, WIDTH_bala))
+img_bala_preta = pygame.transform.scale(img_bala_preta, (HEIGHT_bala, WIDTH_bala))
+img_bala_rosa= pygame.transform.scale(img_bala_rosa, (HEIGHT_bala, WIDTH_bala))
+img_bala_roxa = pygame.transform.scale(img_bala_roxa, (HEIGHT_bala, WIDTH_bala))
+img_bala_laranja = pygame.transform.scale(img_bala_laranja, (HEIGHT_bala, WIDTH_bala))
 
 background = pygame.image.load('assets/img/fundo1.png').convert()
 background = pygame.transform.scale(background, (480, 650))
@@ -51,7 +65,7 @@ class Espinho_lado_esquerdo(pygame.sprite.Sprite):
         # Sorteando a posição do espinho
         self.rect = self.image.get_rect()
         self.rect.x = 0
-        self.rect.y = random.randint(40, HEIGHT-40)
+        self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_lado_direito(pygame.sprite.Sprite):
     def __init__(self,espinho_img_d):
@@ -63,7 +77,7 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         # Sorteando a posição do espinho
         self.rect = self.image.get_rect() 
         self.rect.x = 440
-        self.rect.y = random.randint(40, HEIGHT-40)
+        self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
     def __init__(self,espinho_img_cima,x):
@@ -85,6 +99,15 @@ class Espinho_pra_baixo(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = 0
 
+class Bala_azul(pygame.sprite.Sprite):
+    def __init__(self,img_bala_azul):
+        self.image = img_bala_azul
+        pygame.sprite.Sprite.__init__(self)
+
+        # Adicionando a posição da bala
+        self.rect = self.image.get_rect()
+        self.rect.x = 0
+        self.rect.y = random.randint(30, HEIGHT-30)
 
 # Criando um grupo de meteoros
 all_sprites = pygame.sprite.Group()
@@ -92,6 +115,11 @@ all_espinhos_e = pygame.sprite.Group()
 all_espinhos_d = pygame.sprite.Group()
 all_espinhos_cima = pygame.sprite.Group()
 all_espinhos_baixo = pygame.sprite.Group()
+bala_azul = pygame.sprite.Group()
+bala_preta = pygame.sprite.Group()
+bala_rosa = pygame.sprite.Group()
+bala_roxa = pygame.sprite.Group()
+bala_laranja = pygame.sprite.Group()
 
 # Criando os espinhod da parede 1
 while len(all_espinhos_e) < 4:
@@ -121,6 +149,15 @@ for i in range(0,len(lista_esp_cima)):
     espinho = Espinho_pra_baixo(espinho_img_baixo, x)
     all_espinhos_baixo.add(espinho)
 
+# Criando bala azul
+while len(bala_azul) < 1:
+    balinha = Bala_azul(img_bala_azul)
+    hits = pygame.sprite.spritecollide(balinha, all_espinhos_e, True, pygame.sprite.collide_mask)
+    hits2 = pygame.sprite.spritecollide(balinha, all_espinhos_baixo, True, pygame.sprite.collide_mask)
+    hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
+    if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
+        bala_azul.add(balinha)
+
 # ----- Inicia estruturas de dados
 game = True
 
@@ -128,6 +165,11 @@ all_sprites.add(all_espinhos_e)
 all_sprites.add(all_espinhos_d)
 all_sprites.add(all_espinhos_cima)
 all_sprites.add(all_espinhos_baixo)
+all_sprites.add(bala_azul)
+all_sprites.add(bala_preta)
+all_sprites.add(bala_rosa)
+all_sprites.add(bala_roxa)
+all_sprites.add(bala_laranja)
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -138,11 +180,14 @@ while game:
         if event.type == pygame.QUIT:
             game = False
 
+
+    all_sprites.update()
+    
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
    # window.blit(meteor_img_small, (meteor_x, meteor_y))
-    # Desenha os espinhos
+    # Desenha os sprites
     all_sprites.draw(window)
     
 
