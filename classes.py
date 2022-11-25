@@ -49,7 +49,7 @@ class Bird(pygame.sprite.Sprite):
         self.bird_speed_y = 0 
 
     def update(self):
-        # Atualização da posição da nave
+        # Atualização da posição do passaro
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -64,7 +64,7 @@ class Bird(pygame.sprite.Sprite):
         if self.rect.x + self.rect.width >= 480:
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
-            bird_img = bird_img_esq
+            bird_img = bird_img_esq    
         if self.rect.x <= 0:
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
@@ -83,10 +83,9 @@ bird_y = HEIGHT/2
 # Gravidade aplicada a cada frame 
 ACELERACAO = 0.8
 
-print('aperte espaço para pular')
 
 all_sprites = pygame.sprite.Group()
-player = Bird(bird_img_esq, bird_img_dir)
+player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
 while game:

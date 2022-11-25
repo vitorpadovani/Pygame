@@ -2,6 +2,7 @@
 # ----- Importa e inicia pacotes
 import pygame
 import random
+import math
 
 pygame.init() 
 pygame.mixer.init()
@@ -12,6 +13,8 @@ WIDTH = 480
 HEIGHT = 650
 WIDTH_bala = 40
 HEIGHT_bala = 40
+WIDTH_bird = 45
+HEIGHT_bird = 55
 window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
@@ -42,6 +45,13 @@ img_bala_preta = pygame.transform.scale(img_bala_preta, (HEIGHT_bala, WIDTH_bala
 img_bala_rosa= pygame.transform.scale(img_bala_rosa, (HEIGHT_bala, WIDTH_bala))
 img_bala_roxa = pygame.transform.scale(img_bala_roxa, (HEIGHT_bala, WIDTH_bala))
 img_bala_laranja = pygame.transform.scale(img_bala_laranja, (HEIGHT_bala, WIDTH_bala))
+
+bird_img_dir = pygame.image.load('assets/img/bird.png').convert_alpha()
+bird_img_dir = pygame.transform.scale(bird_img_dir, (HEIGHT_bird, WIDTH_bird))
+bird_img_esq = pygame.image.load('assets/img/bird2.png').convert_alpha()
+bird_img_esq = pygame.transform.scale(bird_img_esq, (HEIGHT_bird, WIDTH_bird))
+bird_img = pygame.image.load('assets/img/bird.png').convert_alpha()
+bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 
 background = pygame.image.load('assets/img/fundo1.png').convert()
 background = pygame.transform.scale(background, (480, 650))
@@ -109,17 +119,62 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
 
+class Bird(pygame.sprite.Sprite):
+    def __init__(self, bird_img_dir, bird_img_esq):
+        # Construtor da classe mãe (Sprite).
+        pygame.sprite.Sprite.__init__(self)
+
+        self.image = bird_img_dir
+        self.image_dir = bird_img_dir
+        self.image_esq = bird_img_esq
+        self.rect = self.image.get_rect()
+        self.rect.centerx = WIDTH / 2
+        self.rect.bottom = HEIGHT/2
+        self.bird_speed_x = 0
+        self.bird_speed_y = 0 
+
+    def update(self):
+        # Atualização da posição do passaro
+        self.rect.x += self.bird_speed_x
+        self.rect.y += self.bird_speed_y
+
+        # Mantem dentro da tela
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
+
+        if self.rect.left < 0:
+            self.rect.left = 0
+        
+        #Quando bater na parede
+        if self.rect.x + self.rect.width >= 480:
+            self.bird_speed_x *= -1
+            self.rect.x += self.bird_speed_x
+            bird_img = bird_img_esq    
+        if self.rect.x <= 0:
+            self.bird_speed_x *= -1
+            self.rect.x += self.bird_speed_x
+            bird_img = bird_img_dir
+
+        if aplica_gravidade:
+            self.bird_speed_y += ACELERACAO
+            self.rect.y += self.bird_speed_y
+            self.rect.x += self.bird_speed_x
+
+
 # Criando um grupo de meteoros
 all_sprites = pygame.sprite.Group()
 all_espinhos_e = pygame.sprite.Group()
 all_espinhos_d = pygame.sprite.Group()
 all_espinhos_cima = pygame.sprite.Group()
 all_espinhos_baixo = pygame.sprite.Group()
+all_espinhos = pygame.sprite.Group()
 bala_azul = pygame.sprite.Group()
 bala_preta = pygame.sprite.Group()
 bala_rosa = pygame.sprite.Group()
 bala_roxa = pygame.sprite.Group()
 bala_laranja = pygame.sprite.Group()
+player = Bird(bird_img_dir, bird_img_esq)
+all_sprites.add(player)
 
 # Criando os espinhod da parede 1
 while len(all_espinhos_e) < 4:
@@ -127,7 +182,6 @@ while len(all_espinhos_e) < 4:
     hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
     if len(hits) == 0:
         all_espinhos_e.add(espinho)
-
 
 # Criando os espinhos da parede 2
 while len(all_espinhos_d) < 4:
@@ -158,8 +212,15 @@ while len(bala_azul) < 1:
     if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
 
+# Matando o passaro caso ele bata no espinho
+
 # ----- Inicia estruturas de dados
 game = True
+clock = pygame.time.Clock()
+FPS = 40
+aplica_gravidade = False
+ACELERACAO = 0.8
+
 
 all_sprites.add(all_espinhos_e)
 all_sprites.add(all_espinhos_d)
@@ -171,25 +232,41 @@ all_sprites.add(bala_rosa)
 all_sprites.add(bala_roxa)
 all_sprites.add(bala_laranja)
 
+all_espinhos.add(all_espinhos_e)
+all_espinhos.add(all_espinhos_d)
+all_espinhos.add(all_espinhos_cima)
+all_espinhos.add(all_espinhos_baixo)
+
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
 while game:
+    clock.tick(FPS)
     # ----- Trata eventos
     for event in pygame.event.get():
         # ----- Verifica consequências
         if event.type == pygame.QUIT:
             game = False
-
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                player.bird_speed_y = -5
+                if player.bird_speed_x < 0:
+                    player.bird_speed_x = -5
+                else:
+                    player.bird_speed_x = 5
+            aplica_gravidade = True
 
     all_sprites.update()
     
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
-   # window.blit(meteor_img_small, (meteor_x, meteor_y))
     # Desenha os sprites
     all_sprites.draw(window)
     
+    # Mata o pássaro caso ele bata no espinho
+    hits = pygame.sprite.spritecollide(player, all_espinhos, True)
+    if len(hits) != 0:
+        game = False
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
