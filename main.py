@@ -13,8 +13,8 @@ WIDTH = 480
 HEIGHT = 650
 WIDTH_bala = 40
 HEIGHT_bala = 40
-WIDTH_bird = 45
-HEIGHT_bird = 55
+WIDTH_bird = 43 
+HEIGHT_bird = 53
 window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
@@ -168,6 +168,8 @@ all_espinhos_d = pygame.sprite.Group()
 all_espinhos_cima = pygame.sprite.Group()
 all_espinhos_baixo = pygame.sprite.Group()
 all_espinhos = pygame.sprite.Group()
+esp_e = pygame.sprite.Group()
+esp_d = pygame.sprite.Group()
 bala_azul = pygame.sprite.Group()
 bala_preta = pygame.sprite.Group()
 bala_rosa = pygame.sprite.Group()
@@ -237,6 +239,9 @@ all_espinhos.add(all_espinhos_d)
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
 
+# esp_e.add(all_espinhos_e)
+# esp_d.add(all_espinhos_d)
+
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
 while game:
@@ -256,13 +261,17 @@ while game:
             aplica_gravidade = True
 
     all_sprites.update()
-    
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     # Desenha os sprites
     all_sprites.draw(window)
-    
+    # if player.rect.x + player.rect.width == 480:
+    #     esp_e.draw(window)
+    #     del(esp_d)
+    # if player.rect.x + player.rect.width == 0:
+    #     esp_d.draw(window)
+    #     del(esp_e)
     # Mata o pássaro caso ele bata no espinho
     hits = pygame.sprite.spritecollide(player, all_espinhos, True)
     if len(hits) != 0:
