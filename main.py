@@ -146,14 +146,14 @@ class Bird(pygame.sprite.Sprite):
             self.rect.left = 0
         
         #Quando bater na parede
-        if self.rect.x + self.rect.width >= 480:
-            self.bird_speed_x *= -1
-            self.rect.x += self.bird_speed_x
-            bird_img = bird_img_esq    
         if self.rect.x <= 0:
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
             bird_img = bird_img_dir
+        if self.rect.x + self.rect.width >= 480:
+            self.bird_speed_x *= -1
+            self.rect.x += self.bird_speed_x
+            bird_img = bird_img_esq    
 
         if aplica_gravidade:
             self.bird_speed_y += ACELERACAO
@@ -239,8 +239,7 @@ all_espinhos.add(all_espinhos_d)
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
 
-# esp_e.add(all_espinhos_e)
-# esp_d.add(all_espinhos_d)
+#  
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -255,7 +254,7 @@ while game:
             if event.key == pygame.K_SPACE:
                 player.bird_speed_y = -5
                 if player.bird_speed_x < 0:
-                    player.bird_speed_x = -5
+                    player.bird_speed_x = 5
                 else:
                     player.bird_speed_x = 5
             aplica_gravidade = True
@@ -272,6 +271,9 @@ while game:
     # if player.rect.x + player.rect.width == 0:
     #     esp_d.draw(window)
     #     del(esp_e)
+
+
+    
     # Mata o pássaro caso ele bata no espinho
     hits = pygame.sprite.spritecollide(player, all_espinhos, True)
     if len(hits) != 0:
