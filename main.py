@@ -146,14 +146,14 @@ class Bird(pygame.sprite.Sprite):
             self.rect.left = 0
         
         #Quando bater na parede
-        if self.rect.x <= 0:
-            self.bird_speed_x *= -1
-            self.rect.x += self.bird_speed_x
-            bird_img = bird_img_dir
         if self.rect.x + self.rect.width >= 480:
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
-            bird_img = bird_img_esq    
+            self.bird_img = bird_img_esq    
+        if self.rect.x <= 0:
+            self.bird_speed_x *= -1
+            self.rect.x += self.bird_speed_x
+            self.bird_img = bird_img_dir
 
         if aplica_gravidade:
             self.bird_speed_y += ACELERACAO
@@ -221,7 +221,7 @@ game = True
 clock = pygame.time.Clock()
 FPS = 40
 aplica_gravidade = False
-ACELERACAO = 0.8
+ACELERACAO = 0.475
 
 
 all_sprites.add(all_espinhos_e)
@@ -252,11 +252,11 @@ while game:
             game = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-                player.bird_speed_y = -5
+                player.bird_speed_y = -4
                 if player.bird_speed_x < 0:
-                    player.bird_speed_x = 5
+                    player.bird_speed_x = -4
                 else:
-                    player.bird_speed_x = 5
+                    player.bird_speed_x = 4
             aplica_gravidade = True
 
     all_sprites.update()
