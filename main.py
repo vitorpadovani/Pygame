@@ -239,7 +239,8 @@ all_espinhos.add(all_espinhos_d)
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
 
-#  
+# esp_d.add(all_espinhos_d)
+# esp_e.add(all_espinhos_e)
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
