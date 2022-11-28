@@ -61,7 +61,7 @@ background3 = pygame.image.load('assets/img/fundo3.png').convert()
 background3 = pygame.transform.scale(background3, (480, 650))
 
 pygame.mixer.music.load('assets/sounds/M72VSQV-games-logo.mp3')
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(0.05)
 pulo_sound = pygame.mixer.Sound('assets/sounds/mixkit-player-jumping-in-a-video-game-2043.wav')
 perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-471.wav')
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
