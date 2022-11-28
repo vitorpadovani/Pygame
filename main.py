@@ -123,6 +123,16 @@ class Bala_azul(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
+class Bala_rosa(pygame.sprite.Sprite):
+    def __init__(self, img_bala_rosa):
+        self.image = img_bala_rosa
+        pygame.sprite.Sprite.__init__(self)
+
+        # Adicionando a posição da bala
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 0
+        self.rect.y = random.randint(30, HEIGHT-30)
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
@@ -130,6 +140,8 @@ class Bird(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.ultima_atualizacao = pygame.time.get_ticks()
         self.score = 0
+        self.tempo_poder = pygame.time.get_ticks()
+        self.cor = ''
         self.image = bird_img_dir
         self.image_dir = bird_img_dir
         self.image_esq = bird_img_esq
@@ -143,9 +155,25 @@ class Bird(pygame.sprite.Sprite):
 
     def update(self):
         # Atualização da posição do passaro
+        if self.cor == 'azul':
+            now = pygame.time.get_ticks()
+            if now - self.tempo_poder > 5000:
+                self.cor = ''
+            else:
+                if self.bird_speed_x > 0:
+                    self.rect.x += 5
+                else:
+                    self.rect.x -= 5
+        if self.cor == 'rosa':
+            now = pygame.time.get_ticks()
+            if now - self.tempo_poder > 5000:
+                self.cor = ''
+            if self.rect.bottom > 610:
+                self.rect.bottom = 610
+            if self.rect.top < 40:
+                self.rect.top = 40
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
-        print(self.score)
 
         # Mantem dentro da tela
         if self.rect.right > WIDTH:
@@ -227,11 +255,21 @@ for i in range(0,len(lista_esp_cima)):
 # Criando bala azul
 while len(bala_azul) < 1:
     balinha = Bala_azul(img_bala_azul)
-    hits = pygame.sprite.spritecollide(balinha, all_espinhos_e, True, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(balinha, esp_d, True, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(balinha, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
     if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
+# Criando bala azul
+while len(bala_rosa) < 1:
+    balinha1 = Bala_rosa(img_bala_rosa)
+    hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
+    hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
+    hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
+    if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
+        bala_rosa.add(balinha1)
 
 # Matando o passaro caso ele bata no espinho
 
@@ -315,9 +353,23 @@ while game:
 
 
     # Mata o pássaro caso ele bata no espinho de cima ou de baixo
-    hits = pygame.sprite.spritecollide(player, all_espinhos, True, pygame.sprite.collide_mask)
-    if len(hits) != 0:
+    hits = pygame.sprite.spritecollide(player, all_espinhos, False, pygame.sprite.collide_mask)
+    if len(hits) != 0 and player.cor != 'rosa':
         game = False
+
+    # Pegando a bala azul
+    hits = pygame.sprite.spritecollide(player, bala_azul, True, pygame.sprite.collide_mask)
+    if len(hits) > 0:
+        player.cor = 'azul'
+        player.tempo_poder = pygame.time.get_ticks()
+
+    # Pegando a bala rosa
+    hits = pygame.sprite.spritecollide(player, bala_rosa, True, pygame.sprite.collide_mask)
+    if len(hits) > 0:
+        player.cor = 'rosa'
+        player.tempo_poder = pygame.time.get_ticks()
+
+
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
