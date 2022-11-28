@@ -292,7 +292,7 @@ while game:
     
 
     # Mata o pássaro caso ele bata no espinho
-    hits = pygame.sprite.spritecollide(player, esp, True, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(player, all_espinhos, True, pygame.sprite.collide_mask)
     if len(hits) != 0:
         game = False
 
