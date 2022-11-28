@@ -74,6 +74,7 @@ class Espinho_lado_esquerdo(pygame.sprite.Sprite):
         # Atualizando a posição do espinho
         # Sorteando a posição do espinho
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(40, HEIGHT-60)
 
@@ -86,6 +87,7 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         # Atualizando a posição do espinho
         # Sorteando a posição do espinho
         self.rect = self.image.get_rect() 
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 440
         self.rect.y = random.randint(40, HEIGHT-60)
 
@@ -96,6 +98,7 @@ class Espinho_pra_cima(pygame.sprite.Sprite):
 
         # Adicionando a posição do espinho
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = x
         self.rect.y = 610
 
@@ -106,6 +109,7 @@ class Espinho_pra_baixo(pygame.sprite.Sprite):
 
         # Adicionando a posição do espinho
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = x
         self.rect.y = 0
 
@@ -116,6 +120,7 @@ class Bala_azul(pygame.sprite.Sprite):
 
         # Adicionando a posição da bala
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
 
@@ -128,10 +133,12 @@ class Bird(pygame.sprite.Sprite):
         self.image_dir = bird_img_dir
         self.image_esq = bird_img_esq
         self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
         self.rect.centerx = WIDTH / 2
         self.rect.bottom = HEIGHT/2
         self.bird_speed_x = 0
-        self.bird_speed_y = 0 
+        self.bird_speed_y = 0
+        self.indo_direita = True
 
     def update(self):
         # Atualização da posição do passaro
@@ -147,13 +154,15 @@ class Bird(pygame.sprite.Sprite):
         
         #Quando bater na parede
         if self.rect.x + self.rect.width >= 480:
+            self.indo_direita = False
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
-            self.bird_img = bird_img_esq    
+            self.image = self.image_esq
         if self.rect.x <= 0:
+            self.indo_direita = True
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
-            self.bird_img = bird_img_dir
+            self.image = self.image_dir
 
         if aplica_gravidade:
             self.bird_speed_y += ACELERACAO
@@ -161,7 +170,7 @@ class Bird(pygame.sprite.Sprite):
             self.rect.x += self.bird_speed_x
 
 
-# Criando um grupo de meteoros
+# Criando um grupo de espinhos
 all_sprites = pygame.sprite.Group()
 all_espinhos_e = pygame.sprite.Group()
 all_espinhos_d = pygame.sprite.Group()
@@ -224,8 +233,6 @@ aplica_gravidade = False
 ACELERACAO = 0.475
 
 
-all_sprites.add(all_espinhos_e)
-all_sprites.add(all_espinhos_d)
 all_sprites.add(all_espinhos_cima)
 all_sprites.add(all_espinhos_baixo)
 all_sprites.add(bala_azul)
@@ -234,13 +241,11 @@ all_sprites.add(bala_rosa)
 all_sprites.add(bala_roxa)
 all_sprites.add(bala_laranja)
 
-all_espinhos.add(all_espinhos_e)
-all_espinhos.add(all_espinhos_d)
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
 
-# esp_e.add(all_espinhos_e)
-# esp_d.add(all_espinhos_d)
+esp_e.add(all_espinhos_e)
+esp_d.add(all_espinhos_d)
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -266,14 +271,28 @@ while game:
     window.blit(background, (0, 0))
     # Desenha os sprites
     all_sprites.draw(window)
-    # if player.rect.x + player.rect.width == 480:
-    #     esp_e.draw(window)
-    #     del(esp_d)
-    # if player.rect.x + player.rect.width == 0:
-    #     esp_d.draw(window)
-    #     del(esp_e)
+
+    if player.indo_direita == True:
+        esp_d.draw(window)
+    else:
+        for espinho in esp_d:
+            espinho.kill()
+        if len(esp_e) == 0:
+            #criar lista da esquerda
+            print('oi')
+    if player.indo_direita == False:
+        hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
+        esp_e.draw(window)
+    else:
+        for espinho in esp_e:
+            espinho.kill()
+        if len(esp_d) == 0:
+            #criar lista da direita
+            print('oi')
+    
+
     # Mata o pássaro caso ele bata no espinho
-    hits = pygame.sprite.spritecollide(player, all_espinhos, True)
+    hits = pygame.sprite.spritecollide(player, esp, True, pygame.sprite.collide_mask)
     if len(hits) != 0:
         game = False
 
