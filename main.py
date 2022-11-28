@@ -273,7 +273,7 @@ while game:
     all_sprites.draw(window)
 
     if player.indo_direita == True:
-        hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
+        hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
         if len(hits) != 0:
             game = False 
         esp_d.draw(window)
@@ -283,7 +283,7 @@ while game:
             #criar lista da esquerda depois de bater
         while len(esp_e) < 4:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
-            hits = pygame.sprite.spritecollide(espinho, esp_e, True)
+            hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
                 esp_e.add(espinho)
 
@@ -298,7 +298,7 @@ while game:
             #criar lista da direita depois de bater
         while len(esp_d) < 4:
             espinho = Espinho_lado_direito(espinho_img_d)
-            hits = pygame.sprite.spritecollide(espinho, esp_d, True)
+            hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
                 esp_d.add(espinho)
 
