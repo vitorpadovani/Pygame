@@ -317,7 +317,7 @@ while game:
                     player.bird_speed_x = 4
             aplica_gravidade = True
 
-    all_sprites.update()
+    all_sprites.update() 
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
