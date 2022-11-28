@@ -128,7 +128,8 @@ class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
-
+        self.ultima_atualizacao = pygame.time.get_ticks()
+        self.score = 0
         self.image = bird_img_dir
         self.image_dir = bird_img_dir
         self.image_esq = bird_img_esq
@@ -144,6 +145,7 @@ class Bird(pygame.sprite.Sprite):
         # Atualização da posição do passaro
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
+        print(self.score)
 
         # Mantem dentro da tela
         if self.rect.right > WIDTH:
@@ -158,11 +160,19 @@ class Bird(pygame.sprite.Sprite):
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
             self.image = self.image_esq
+            now = pygame.time.get_ticks()
+            if now - self.ultima_atualizacao > 500:
+                self.score += 1
+                self.ultima_atualizacao = now
         if self.rect.x <= 0:
             self.indo_direita = True
             self.bird_speed_x *= -1
             self.rect.x += self.bird_speed_x
             self.image = self.image_dir
+            now = pygame.time.get_ticks()
+            if now - self.ultima_atualizacao > 500:
+                self.score += 1
+                self.ultima_atualizacao = now
 
         if aplica_gravidade:
             self.bird_speed_y += ACELERACAO
@@ -233,6 +243,7 @@ aplica_gravidade = False
 ACELERACAO = 0.475
 
 
+
 all_sprites.add(all_espinhos_cima)
 all_sprites.add(all_espinhos_baixo)
 all_sprites.add(bala_azul)
@@ -280,10 +291,10 @@ while game:
     else:
         for espinho in esp_d:
             espinho.kill()
-            #criar lista da esquerda depois de bater
+        # criar lista da esquerda depois de bater
         while len(esp_e) < 4:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
-            hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
+            hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
                 esp_e.add(espinho)
 
@@ -298,7 +309,7 @@ while game:
             #criar lista da direita depois de bater
         while len(esp_d) < 4:
             espinho = Espinho_lado_direito(espinho_img_d)
-            hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
+            hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
                 esp_d.add(espinho)
 
