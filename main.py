@@ -273,25 +273,37 @@ while game:
     all_sprites.draw(window)
 
     if player.indo_direita == True:
+        hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
+        if len(hits) != 0:
+            game = False 
         esp_d.draw(window)
     else:
         for espinho in esp_d:
             espinho.kill()
-        if len(esp_e) == 0:
-            #criar lista da esquerda
-            print('oi')
+            #criar lista da esquerda depois de bater
+        while len(esp_e) < 4:
+            espinho = Espinho_lado_esquerdo(espinho_img_e)
+            hits = pygame.sprite.spritecollide(espinho, esp_e, True)
+            if len(hits) == 0:
+                esp_e.add(espinho)
+
     if player.indo_direita == False:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
+        if len(hits) != 0:
+            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
             espinho.kill()
-        if len(esp_d) == 0:
-            #criar lista da direita
-            print('oi')
-    
+            #criar lista da direita depois de bater
+        while len(esp_d) < 4:
+            espinho = Espinho_lado_direito(espinho_img_d)
+            hits = pygame.sprite.spritecollide(espinho, esp_d, True)
+            if len(hits) == 0:
+                esp_d.add(espinho)
 
-    # Mata o pássaro caso ele bata no espinho
+
+    # Mata o pássaro caso ele bata no espinho de cima ou de baixo
     hits = pygame.sprite.spritecollide(player, all_espinhos, True, pygame.sprite.collide_mask)
     if len(hits) != 0:
         game = False
@@ -302,5 +314,5 @@ while game:
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
 
-#teste
+
 
