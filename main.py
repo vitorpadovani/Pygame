@@ -66,6 +66,7 @@ pulo_sound = pygame.mixer.Sound('assets/sounds/mixkit-player-jumping-in-a-video-
 perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-471.wav')
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
 
+
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
     def __init__(self,espinho_img_e):
         self.image = espinho_img_e
@@ -123,6 +124,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
+
 class Bala_rosa(pygame.sprite.Sprite):
     def __init__(self, img_bala_rosa):
         self.image = img_bala_rosa
@@ -256,19 +258,19 @@ for i in range(0,len(lista_esp_cima)):
 while len(bala_azul) < 1:
     balinha = Bala_azul(img_bala_azul)
     hits = pygame.sprite.spritecollide(balinha, esp_d, True, pygame.sprite.collide_mask)
-    hits = pygame.sprite.spritecollide(balinha, esp_e, True, pygame.sprite.collide_mask)
+    hits1 = pygame.sprite.spritecollide(balinha, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
-# Criando bala rosa
+# Criando bala azul
 while len(bala_rosa) < 1:
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
-    hits = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
+    hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_rosa.add(balinha1)
 
 # Matando o passaro caso ele bata no espinho
