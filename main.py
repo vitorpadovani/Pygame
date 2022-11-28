@@ -288,7 +288,7 @@ all_sprites.add(all_espinhos_cima)
 all_sprites.add(all_espinhos_baixo)
 all_sprites.add(bala_azul)
 all_sprites.add(bala_preta)
-all_sprites.add(bala_rosa)
+#all_sprites.add(bala_rosa)
 all_sprites.add(bala_roxa)
 all_sprites.add(bala_laranja)
 
@@ -323,6 +323,8 @@ while game:
     window.blit(background, (0, 0))
     # Desenha os sprites
     all_sprites.draw(window)
+    if player.score >= 8:
+        bala_rosa.draw(window)
 
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
