@@ -261,7 +261,7 @@ while len(bala_azul) < 1:
     hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
     if len(hits) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
-# Criando bala azul
+# Criando bala rosa
 while len(bala_rosa) < 1:
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
@@ -307,6 +307,7 @@ while game:
             game = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
+                pulo_sound.play()
                 player.bird_speed_y = -4
                 if player.bird_speed_x < 0:
                     player.bird_speed_x = -4
@@ -362,13 +363,14 @@ while game:
     if len(hits) > 0:
         player.cor = 'azul'
         player.tempo_poder = pygame.time.get_ticks()
+        bala_sound.play()
 
     # Pegando a bala rosa
     hits = pygame.sprite.spritecollide(player, bala_rosa, True, pygame.sprite.collide_mask)
     if len(hits) > 0:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
-
+        bala_sound.play()
 
 
     # ----- Atualiza estado do jogo
