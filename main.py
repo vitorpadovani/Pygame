@@ -15,7 +15,6 @@ WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
 HEIGHT_bird = 53
-window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
@@ -243,18 +242,34 @@ player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
 # Criando os espinhos da parede 1
-while len(all_espinhos_e) < 4:
-    espinho = Espinho_lado_esquerdo(espinho_img_e)
-    hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
-    if len(hits) == 0:
-        all_espinhos_e.add(espinho)
+while player.score <= 20:
+    while len(all_espinhos_e) < 4:
+        espinho = Espinho_lado_esquerdo(espinho_img_e)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
+        if len(hits) == 0:
+            all_espinhos_e.add(espinho)
+while player.score >20 and player.score <= 40: 
+    while len(all_espinhos_d) < 6:
+        espinho = Espinho_lado_direito(espinho_img_d)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+        if len(hits) == 0:
+            all_espinhos_d.add(espinho)
 
-# Criando os espinhos da parede 2
-while len(all_espinhos_d) < 4:
-    espinho = Espinho_lado_direito(espinho_img_d)
-    hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-    if len(hits) == 0:
-        all_espinhos_d.add(espinho)
+# Criando os espinhos da parede 
+while player.score <= 20: 
+    while len(all_espinhos_d) < 4:
+        espinho = Espinho_lado_direito(espinho_img_d)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+        if len(hits) == 0:
+            all_espinhos_d.add(espinho)
+while player.score >20 and player.score <= 40: 
+    while len(all_espinhos_d) < 6:
+        espinho = Espinho_lado_direito(espinho_img_d)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+        if len(hits) == 0:
+            all_espinhos_d.add(espinho)
+
+
 
 # Criando os espinhos virados pra cima
 lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
