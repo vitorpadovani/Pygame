@@ -265,12 +265,14 @@ while len(bala_azul) < 1:
         bala_azul.add(balinha)
 # Criando bala azul
 while len(bala_rosa) < 1:
+    # balinha = Bala_azul(img_bala_azul)
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0:
+    #hits4 = pygame.sprite.spritecollide(balinha1, balinha, True, pygame.sprite.collide_mask)
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: #and len(hits4) == 0:
         bala_rosa.add(balinha1)
 
 # Matando o passaro caso ele bata no espinho
@@ -283,17 +285,12 @@ aplica_gravidade = False
 ACELERACAO = 0.475
 
 
-
 all_sprites.add(all_espinhos_cima)
 all_sprites.add(all_espinhos_baixo)
-all_sprites.add(bala_azul)
-all_sprites.add(bala_preta)
-#all_sprites.add(bala_rosa)
-all_sprites.add(bala_roxa)
-all_sprites.add(bala_laranja)
 
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
+
 
 esp_e.add(all_espinhos_e)
 esp_d.add(all_espinhos_d)
@@ -317,12 +314,15 @@ while game:
                     player.bird_speed_x = 4
             aplica_gravidade = True
 
-    all_sprites.update()
+    all_sprites.update() 
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     # Desenha os sprites
     all_sprites.draw(window)
+    if player.score >= 3: 
+        bala_azul.draw(window)
+
     if player.score >= 8:
         bala_rosa.draw(window)
 
@@ -357,7 +357,6 @@ while game:
                 esp_d.add(espinho)
 
 
-    # Mata o pássaro caso ele bata no espinho de cima ou de baixo
     hits = pygame.sprite.spritecollide(player, all_espinhos, False, pygame.sprite.collide_mask)
     if len(hits) != 0 and player.cor != 'rosa':
         game = False
