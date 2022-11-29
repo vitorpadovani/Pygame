@@ -184,10 +184,7 @@ class Bird(pygame.sprite.Sprite):
         #     now = pygame.time.get_ticks()
         #     if now - self.tempo_poder > 5000:
         #         self.cor = ''
-        #     if self.rect.bottom > 610:
-        #         self.rect.bottom = 610
-        #     if self.rect.top < 40:
-        #         self.rect.top = 40
+        #         player.score += 1
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -413,8 +410,6 @@ while game:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
-
-
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
