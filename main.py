@@ -262,6 +262,7 @@ while len(bala_azul) < 1:
 
 # Criando bala rosa
 while len(bala_rosa) < 1:
+    # balinha = Bala_azul(img_bala_azul)
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
@@ -270,8 +271,6 @@ while len(bala_rosa) < 1:
     #hits4 = pygame.sprite.spritecollide(balinha1, balinha, True, pygame.sprite.collide_mask)
     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: #and len(hits4) == 0:
         bala_rosa.add(balinha1)
-
-# Matando o passaro caso ele bata no espinho
 
 # ----- Inicia estruturas de dados
 game = True
