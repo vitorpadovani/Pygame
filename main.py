@@ -401,12 +401,7 @@ while game:
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
 
-   # Pegando a bala rosa
-    # hits = pygame.sprite.spritecollide(player, bala_rosa, True, pygame.sprite.collide_mask)
-    # if len(hits) > 0:
-    #     player.cor = 'roxa'
-    #     player.tempo_poder = pygame.time.get_ticks()
-    #     bala_sound.play()
+
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
