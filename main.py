@@ -132,6 +132,17 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
 
+class Bala_roxa(pygame.sprite.Sprite):
+    def __init__(self, img_bala_roxa):
+        self.image = img_bala_roxa
+        pygame.sprite.Sprite.__init__(self)
+
+        # Adicionando a posição da bala
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = WIDTH - 30
+        self.rect.y = random.randint(30, HEIGHT-30)
+
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
         # Construtor da classe mãe (Sprite).
@@ -170,6 +181,14 @@ class Bird(pygame.sprite.Sprite):
                 self.rect.bottom = 610
             if self.rect.top < 40:
                 self.rect.top = 40
+        # if self.cor == 'rosa':
+        #     now = pygame.time.get_ticks()
+        #     if now - self.tempo_poder > 5000:
+        #         self.cor = ''
+        #     if self.rect.bottom > 610:
+        #         self.rect.bottom = 610
+        #     if self.rect.top < 40:
+        #         self.rect.top = 40
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -223,7 +242,7 @@ bala_laranja = pygame.sprite.Group()
 player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
-# Criando os espinhod da parede 1
+# Criando os espinhos da parede 1
 while len(all_espinhos_e) < 4:
     espinho = Espinho_lado_esquerdo(espinho_img_e)
     hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
@@ -262,16 +281,23 @@ while len(bala_azul) < 1:
 
 # Criando bala rosa
 while len(bala_rosa) < 1:
-    # balinha = Bala_azul(img_bala_azul)
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    #hits4 = pygame.sprite.spritecollide(balinha1, balinha, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: #and len(hits4) == 0:
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
         bala_rosa.add(balinha1)
 
+# Criando bala roxa
+while len(bala_roxa) < 1:
+    balinha1 = Bala_rosa(img_bala_roxa)
+    hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
+    hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
+    hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
+    hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
+        bala_rosa.add(balinha1)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -325,6 +351,9 @@ while game:
     if player.score >= 6:
         bala_rosa.draw(window)
 
+    if player.score >= 1:
+        bala_rosa.draw(window)
+
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
         if len(hits) != 0:
@@ -354,7 +383,6 @@ while game:
             if len(hits) == 0:
                 esp_d.add(espinho)
 
-
     hits = pygame.sprite.spritecollide(player, batida, False, pygame.sprite.collide_mask)
     if len(hits) != 0 and player.cor != 'rosa':
         game = False
@@ -372,13 +400,19 @@ while game:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
+
+   # Pegando a bala rosa
+    # hits = pygame.sprite.spritecollide(player, bala_rosa, True, pygame.sprite.collide_mask)
+    # if len(hits) > 0:
+    #     player.cor = 'roxa'
+    #     player.tempo_poder = pygame.time.get_ticks()
+    #     bala_sound.play()
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
     text_rect.midtop = (WIDTH / 2,  35)
     window.blit(text_surface, text_rect)
-
 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
