@@ -248,7 +248,7 @@ while player.score <= 20:
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
         if len(hits) == 0:
             all_espinhos_e.add(espinho)
-while player.score >20 and player.score <= 40: 
+while player.score <= 40: 
     while len(all_espinhos_d) < 6:
         espinho = Espinho_lado_direito(espinho_img_d)
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
@@ -262,7 +262,7 @@ while player.score <= 20:
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
         if len(hits) == 0:
             all_espinhos_d.add(espinho)
-while player.score >20 and player.score <= 40: 
+while player.score <= 40: 
     while len(all_espinhos_d) < 6:
         espinho = Espinho_lado_direito(espinho_img_d)
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
