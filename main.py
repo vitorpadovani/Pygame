@@ -269,8 +269,6 @@ elif player.score > 20 and player.score <= 40:
         if len(hits) == 0:
             all_espinhos_d.add(espinho)
 
-
-
 # Criando os espinhos virados pra cima
 lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
 for i in range(0,len(lista_esp_cima)):
