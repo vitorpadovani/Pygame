@@ -53,10 +53,10 @@ bird_img_esq = pygame.transform.scale(bird_img_esq, (HEIGHT_bird, WIDTH_bird))
 bird_img = pygame.image.load('assets/img/bird.png').convert_alpha()
 bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 
-background = pygame.image.load('assets/img/fundo1.png').convert()
+# background = pygame.image.load('assets/img/fundo1.png').convert()
+# background = pygame.transform.scale(background, (480, 650))
+background = pygame.image.load('assets/img/fundo2.png').convert()
 background = pygame.transform.scale(background, (480, 650))
-background2 = pygame.image.load('assets/img/fundo2.png').convert()
-background2 = pygame.transform.scale(background2, (480, 650))
 background3 = pygame.image.load('assets/img/fundo3.png').convert()
 background3 = pygame.transform.scale(background3, (480, 650))
 
@@ -377,9 +377,9 @@ while game:
         bala_sound.play()
     
     # Desenhando o score
-    text_surface = fonte_score.render("{:08d}".format(player.score), True, (255, 255, 0))
+    text_surface = fonte_score.render("{:06d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
-    text_rect.midtop = (WIDTH / 2,  10)
+    text_rect.midtop = (WIDTH / 2,  35)
     window.blit(text_surface, text_rect)
 
 
