@@ -310,7 +310,7 @@ while len(bala_rosa) < 1:
 #     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
 #     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
 #     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
-#         bala_rosa.add(balinha1)
+#         bala_roxa.add(balinha1)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -364,7 +364,7 @@ while game:
     if player.score >= 6:
         bala_rosa.draw(window)
 
-    # if player.score >= 1:
+    # if player.score >= 10:
     #     bala_roxa.draw(window)
 
     if player.indo_direita == True:
