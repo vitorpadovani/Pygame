@@ -132,16 +132,16 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
 
-class Bala_roxa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_roxa):
-        self.image = img_bala_roxa
-        pygame.sprite.Sprite.__init__(self)
+# class Bala_roxa(pygame.sprite.Sprite):
+#     def __init__(self, img_bala_roxa):
+#         self.image = img_bala_roxa
+#         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
-        self.rect = self.image.get_rect()
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = WIDTH - 30
-        self.rect.y = random.randint(30, HEIGHT-30)
+#         # Adicionando a posição da bala
+#         self.rect = self.image.get_rect()
+#         self.mask = pygame.mask.from_surface(self.image)
+#         self.rect.x = WIDTH - 30
+#         self.rect.y = random.randint(30, HEIGHT-30)
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
@@ -181,7 +181,7 @@ class Bird(pygame.sprite.Sprite):
                 self.rect.bottom = 610
             if self.rect.top < 40:
                 self.rect.top = 40
-        # if self.cor == 'rosa':
+        # if self.cor == 'roxa':
         #     now = pygame.time.get_ticks()
         #     if now - self.tempo_poder > 5000:
         #         self.cor = ''
@@ -290,14 +290,14 @@ while len(bala_rosa) < 1:
         bala_rosa.add(balinha1)
 
 # Criando bala roxa
-while len(bala_roxa) < 1:
-    balinha1 = Bala_rosa(img_bala_roxa)
-    hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
-    hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
-    hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
-    hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
-        bala_rosa.add(balinha1)
+# while len(bala_roxa) < 1:
+#     balinha1 = Bala_rosa(img_bala_roxa)
+#     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
+#     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
+#     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
+#     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
+#     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
+#         bala_rosa.add(balinha1)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -351,8 +351,8 @@ while game:
     if player.score >= 6:
         bala_rosa.draw(window)
 
-    if player.score >= 1:
-        bala_rosa.draw(window)
+    # if player.score >= 1:
+    #     bala_roxa.draw(window)
 
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
