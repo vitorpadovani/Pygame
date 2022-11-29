@@ -65,6 +65,7 @@ pygame.mixer.music.set_volume(0.05)
 pulo_sound = pygame.mixer.Sound('assets/sounds/mixkit-player-jumping-in-a-video-game-2043.wav')
 perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-471.wav')
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
+fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
@@ -374,6 +375,12 @@ while game:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
+    
+    # Desenhando o score
+    text_surface = fonte_score.render("{:08d}".format(player.score), True, (255, 255, 0))
+    text_rect = text_surface.get_rect()
+    text_rect.midtop = (WIDTH / 2,  10)
+    window.blit(text_surface, text_rect)
 
 
     # ----- Atualiza estado do jogo
