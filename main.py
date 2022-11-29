@@ -57,8 +57,6 @@ bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 # background = pygame.transform.scale(background, (480, 650))
 background = pygame.image.load('assets/img/fundo2.png').convert()
 background = pygame.transform.scale(background, (480, 650))
-background3 = pygame.image.load('assets/img/fundo3.png').convert()
-background3 = pygame.transform.scale(background3, (480, 650))
 
 pygame.mixer.music.load('assets/sounds/M72VSQV-games-logo.mp3')
 pygame.mixer.music.set_volume(0.05)
