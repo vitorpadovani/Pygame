@@ -215,8 +215,8 @@ all_espinhos_baixo = pygame.sprite.Group()
 all_espinhos = pygame.sprite.Group()
 esp_e = pygame.sprite.Group()
 esp_d = pygame.sprite.Group()
+batida =  pygame.sprite.Group()
 bala_azul = pygame.sprite.Group()
-bala_preta = pygame.sprite.Group()
 bala_rosa = pygame.sprite.Group()
 bala_roxa = pygame.sprite.Group()
 bala_laranja = pygame.sprite.Group()
@@ -272,6 +272,7 @@ while len(bala_rosa) < 1:
     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: #and len(hits4) == 0:
         bala_rosa.add(balinha1)
 
+
 # ----- Inicia estruturas de dados
 game = True
 clock = pygame.time.Clock()
@@ -286,9 +287,12 @@ all_sprites.add(all_espinhos_baixo)
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
 
-
 esp_e.add(all_espinhos_e)
 esp_d.add(all_espinhos_d)
+batida.add(all_espinhos_e)
+batida.add(all_espinhos_d)
+batida.add(all_espinhos_cima)
+batida.add(all_espinhos_baixo)
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -315,10 +319,10 @@ while game:
     window.blit(background, (0, 0))
     # Desenha os sprites
     all_sprites.draw(window)
-    if player.score >= 3: 
+    if player.score >= 2: 
         bala_azul.draw(window)
 
-    if player.score >= 8:
+    if player.score >= 6:
         bala_rosa.draw(window)
 
     if player.indo_direita == True:
@@ -351,7 +355,7 @@ while game:
                 esp_d.add(espinho)
 
 
-    hits = pygame.sprite.spritecollide(player, all_espinhos, False, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(player, batida, False, pygame.sprite.collide_mask)
     if len(hits) != 0 and player.cor != 'rosa':
         game = False
 
@@ -370,7 +374,7 @@ while game:
         bala_sound.play()
     
     # Desenhando o score
-    text_surface = fonte_score.render("{:06d}".format(player.score), True, (255, 255, 0))
+    text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
     text_rect.midtop = (WIDTH / 2,  35)
     window.blit(text_surface, text_rect)
