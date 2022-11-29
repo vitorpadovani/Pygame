@@ -259,9 +259,9 @@ while len(bala_azul) < 1:
     hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
-# Criando bala azul
+
+# Criando bala rosa
 while len(bala_rosa) < 1:
-    # balinha = Bala_azul(img_bala_azul)
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
