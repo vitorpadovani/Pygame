@@ -242,13 +242,13 @@ player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
 # Criando os espinhos da parede 1
-while player.score <= 20:
+if player.score <= 20:
     while len(all_espinhos_e) < 4:
         espinho = Espinho_lado_esquerdo(espinho_img_e)
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
         if len(hits) == 0:
             all_espinhos_e.add(espinho)
-while player.score > 20 and player.score <= 40: 
+elif player.score > 20 and player.score <= 40: 
     while len(all_espinhos_d) < 6:
         espinho = Espinho_lado_direito(espinho_img_d)
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
@@ -256,13 +256,13 @@ while player.score > 20 and player.score <= 40:
             all_espinhos_d.add(espinho)
 
 # Criando os espinhos da parede 
-while player.score <= 20: 
+if player.score <= 20: 
     while len(all_espinhos_d) < 4:
         espinho = Espinho_lado_direito(espinho_img_d)
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
         if len(hits) == 0:
             all_espinhos_d.add(espinho)
-while player.score > 20 and player.score <= 40: 
+elif player.score > 20 and player.score <= 40: 
     while len(all_espinhos_d) < 6:
         espinho = Espinho_lado_direito(espinho_img_d)
         hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
