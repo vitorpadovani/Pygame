@@ -335,16 +335,11 @@ while game:
     else:
         for espinho in esp_d:
             espinho.kill()
-        # criar lista da esquerda depois de bater
         while len(esp_e) < 4:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
-            # balinha = Bala_azul(img_bala_azul)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
-            # hits1 = pygame.sprite.spritecollide(espinho, balinha, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
                 esp_e.add(espinho)
-            # if len(hits1) > 0:
-            #     espinho.kill()
 
     if player.indo_direita == False:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
