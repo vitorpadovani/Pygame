@@ -345,11 +345,15 @@ while game:
     window.blit(background, (0, 0))
     # Desenha os sprites
     all_sprites.draw(window)
-    if player.score >= 2: 
+    if player.score >= 2 and player.score != 0: 
         bala_azul.draw(window)
+    if player.score % 10 == 0 and player.score != 0:
+        bala_rosa.draw(window) 
 
-    if player.score >= 6:
+    if player.score >= 6 and player.score != 0:
         bala_rosa.draw(window)
+    if player.score % 6 == 0 and player.score != 0:
+        bala_rosa.draw(window)  
 
     # if player.score >= 1:
     #     bala_roxa.draw(window)
@@ -406,7 +410,7 @@ while game:
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
-    text_rect.midtop = (WIDTH / 2,  35)
+    text_rect.midtop = (WIDTH / 2,  40)
     window.blit(text_surface, text_rect)
 
     # ----- Atualiza estado do jogo
