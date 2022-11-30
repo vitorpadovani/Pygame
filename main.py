@@ -341,7 +341,9 @@ kill_bala_rosa = 7000
 next_bala_roxa = 10000
 kill_bala_roxa = 7000
 
+#tela inicio
 state = init_screen(window)
+
 if state !=GAME:
     game=False
 
@@ -492,6 +494,3 @@ while game:
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-
-
-
