@@ -334,6 +334,7 @@ esp_e.add(all_espinhos_e)
 esp_d.add(all_espinhos_d)
 
 state = init_screen(window)
+
 if state !=GAME:
     game=False
 
