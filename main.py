@@ -339,7 +339,7 @@ next_bala_azul = 7000
 kill_bala_azul = 7000 
 next_bala_rosa = 5000
 kill_bala_rosa = 7000
-next_bala_roxa = 10000
+next_bala_roxa = 5000
 kill_bala_roxa = 7000
 
 #tela inicio
@@ -399,7 +399,7 @@ while game:
     if balinha_roxa == None:
         if now1 - tempo3 > next_bala_roxa:
             balinha_roxa = Bala_rosa(img_bala_roxa) 
-            next_bala_roxa *= 2
+            next_bala_roxa *= 1
             tempo3 = now1
             brx.add(balinha_roxa)
     else:
