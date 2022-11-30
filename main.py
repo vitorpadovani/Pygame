@@ -139,7 +139,7 @@ class Bala_roxa(pygame.sprite.Sprite):
         # Adicionando a posição da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = 0
+        self.rect.x = WIDTH-WIDTH_bala
         self.rect.y = random.randint(30, HEIGHT-30)
 
 class Bird(pygame.sprite.Sprite):
@@ -182,7 +182,7 @@ class Bird(pygame.sprite.Sprite):
                 self.rect.top = 40
         if self.cor == 'roxa':
             now = pygame.time.get_ticks()
-            if now - self.tempo_poder > 100:
+            if now - self.tempo_poder > 500:
                 self.cor = ''
             else:
                 self.score += 1
@@ -384,10 +384,6 @@ while game:
     if player.score >= 30:
         balinha2.kill()
 
-    
-
-    # if player.score >= 10:
-    #     bala_roxa.draw(window)
 
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
