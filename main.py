@@ -430,7 +430,7 @@ while game:
         elif player.score > 24 and player.score <= 35:
             qtd_espinho = 7
         elif player.score > 35:
-            qtd_espinho = 9
+            qtd_espinho = 8
         while len(esp_e) < qtd_espinho:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
@@ -454,7 +454,7 @@ while game:
         elif player.score > 28 and player.score <= 40:
             qtd_espinho = 7
         elif player.score > 40:
-            qtd_espinho = 9
+            qtd_espinho = 8
         while len(esp_d) < qtd_espinho:
             espinho = Espinho_lado_direito(espinho_img_d)
             hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
