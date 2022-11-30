@@ -131,16 +131,16 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
 
-class Bala_roxa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_roxa):
-        self.image = img_bala_roxa
-        pygame.sprite.Sprite.__init__(self)
+# class Bala_roxa(pygame.sprite.Sprite):
+#     def __init__(self, img_bala_roxa):
+#         self.image = img_bala_roxa
+#         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
-        self.rect = self.image.get_rect()
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = WIDTH-WIDTH_bala
-        self.rect.y = random.randint(30, HEIGHT-30)
+#         # Adicionando a posição da bala
+#         self.rect = self.image.get_rect()
+#         self.mask = pygame.mask.from_surface(self.image)
+#         self.rect.x = WIDTH - 30
+#         self.rect.y = random.randint(30, HEIGHT-30)
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
@@ -174,21 +174,12 @@ class Bird(pygame.sprite.Sprite):
                     self.rect.x -= 5
         if self.cor == 'rosa':
             now = pygame.time.get_ticks()
-            if now - self.tempo_poder > 10000:
+            if now - self.tempo_poder > 5000:
                 self.cor = ''
             if self.rect.bottom > 610:
                 self.rect.bottom = 610
             if self.rect.top < 40:
                 self.rect.top = 40
-            # if self.rect.right < HEIGHT - 30:
-            #     self.rect.right = HEIGHT - 30
-        if self.cor == 'roxa':
-            now = pygame.time.get_ticks()
-            if now - self.tempo_poder > 500:
-                self.cor = ''
-            else:
-                self.score += 1
-
         # if self.cor == 'roxa':
         #     now = pygame.time.get_ticks()
         #     if now - self.tempo_poder > 5000:
@@ -248,32 +239,18 @@ player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
 # Criando os espinhos da parede 1
-if player.score <= 20:
-    while len(all_espinhos_e) < 4:
-        espinho = Espinho_lado_esquerdo(espinho_img_e)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
-        if len(hits) == 0:
-            all_espinhos_e.add(espinho)
-elif player.score > 20 and player.score <= 40: 
-    while len(all_espinhos_d) < 6:
-        espinho = Espinho_lado_direito(espinho_img_d)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-        if len(hits) == 0:
-            all_espinhos_d.add(espinho)
+while len(all_espinhos_e) < 4:
+    espinho = Espinho_lado_esquerdo(espinho_img_e)
+    hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
+    if len(hits) == 0:
+        all_espinhos_e.add(espinho)
 
-# Criando os espinhos da parede 
-if player.score <= 20: 
-    while len(all_espinhos_d) < 4:
-        espinho = Espinho_lado_direito(espinho_img_d)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-        if len(hits) == 0:
-            all_espinhos_d.add(espinho)
-elif player.score > 20 and player.score <= 40: 
-    while len(all_espinhos_d) < 6:
-        espinho = Espinho_lado_direito(espinho_img_d)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-        if len(hits) == 0:
-            all_espinhos_d.add(espinho)
+# Criando os espinhos da parede 2
+while len(all_espinhos_d) < 4:
+    espinho = Espinho_lado_direito(espinho_img_d)
+    hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+    if len(hits) == 0:
+        all_espinhos_d.add(espinho)
 
 # Criando os espinhos virados pra cima
 lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
@@ -309,14 +286,14 @@ while len(bala_rosa) < 1:
         bala_rosa.add(balinha1)
 
 # Criando bala roxa
-while len(bala_roxa) < 1:
-    balinha2 = Bala_roxa(img_bala_roxa)
-    hits = pygame.sprite.spritecollide(balinha2, esp_d, True, pygame.sprite.collide_mask)
-    hits1 = pygame.sprite.spritecollide(balinha2, esp_e, True, pygame.sprite.collide_mask)
-    hits2 = pygame.sprite.spritecollide(balinha2, all_espinhos_baixo, True, pygame.sprite.collide_mask)
-    hits3 = pygame.sprite.spritecollide(balinha2, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
-        bala_roxa.add(balinha2)
+# while len(bala_roxa) < 1:
+#     balinha1 = Bala_rosa(img_bala_roxa)
+#     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
+#     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
+#     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
+#     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
+#     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
+#         bala_roxa.add(balinha1)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -362,30 +339,13 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
-    
-    # Desenha os sprites das balas
+    # Desenha os sprites
     all_sprites.draw(window)
-    if player.score >= 15: 
-        bala_azul.draw(window)   
+    if player.score >= 2: 
+        bala_azul.draw(window)
 
-    if player.score >= 2:
+    if player.score >= 6:
         bala_rosa.draw(window)
-
-    if player.score >= 25:
-        bala_roxa.draw(window)
-
-    # Removendo bala rosa da tela
-    if player.score >= 7:
-        balinha1.kill()
-
-    # Removendo bala azul da tela
-    if player.score >= 20:
-        balinha.kill()
-
-    # Removendo bala roxa da tela
-    if player.score >= 30:
-        balinha2.kill()
-
 
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
@@ -395,7 +355,15 @@ while game:
     else:
         for espinho in esp_d:
             espinho.kill()
-        while len(esp_e) < 4:
+        if player.score <=13:
+            qtd_espinho = 4
+        elif player.score > 13 and player.score <= 24:
+            qtd_espinho = 6
+        elif player.score > 24 and player.score <= 35:
+            qtd_espinho = 7
+        elif player.score > 35:
+            qtd_espinho = 9
+        while len(esp_e) < qtd_espinho:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
@@ -410,7 +378,15 @@ while game:
         for espinho in esp_e:
             espinho.kill()
             #criar lista da direita depois de bater
-        while len(esp_d) < 4:
+        if player.score <=16:
+            qtd_espinho = 4
+        elif player.score > 16 and player.score <= 28:
+            qtd_espinho = 6
+        elif player.score > 28 and player.score <= 40:
+            qtd_espinho = 7
+        elif player.score > 40:
+            qtd_espinho = 9
+        while len(esp_d) < qtd_espinho:
             espinho = Espinho_lado_direito(espinho_img_d)
             hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
             if len(hits) == 0:
@@ -433,18 +409,11 @@ while game:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
-
-    # Pegando a bala roxa
-    hits = pygame.sprite.spritecollide(player, bala_roxa, True, pygame.sprite.collide_mask)
-    if len(hits) > 0:
-        player.cor = 'roxa'
-        player.tempo_poder = pygame.time.get_ticks()
-        bala_sound.play()
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
-    text_rect.midtop = (WIDTH / 2,  40)
+    text_rect.midtop = (WIDTH / 2,  35)
     window.blit(text_surface, text_rect)
 
     # ----- Atualiza estado do jogo
