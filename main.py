@@ -66,7 +66,7 @@ tela_fim= pygame.transform.scale(tela_fim, (480, 650))
 
 
 pygame.mixer.music.load('assets/sounds/M72VSQV-games-logo.mp3')
-pygame.mixer.music.set_volume(0.05)
+pygame.mixer.music.set_volume(1)
 pulo_sound = pygame.mixer.Sound('assets/sounds/mixkit-player-jumping-in-a-video-game-2043.wav')
 perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-471.wav')
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
