@@ -441,6 +441,7 @@ while game:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
             perdeu_sound.play()
+            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
@@ -494,8 +495,7 @@ while game:
 
     if game == False:
         print(fim_screen(window))        
-        time.sleep(5)
-    
+        time.sleep(2)
         pygame.display.update()
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados

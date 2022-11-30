@@ -20,7 +20,7 @@ def fim_screen(screen):
     tela_fim= pygame.transform.scale(tela_fim, (480, 650))
 
     tela_fim_rect = tela_fim.get_rect()
-
+    tempo = pygame.time.get_ticks()
     running = True
     while running:
 
@@ -42,5 +42,7 @@ def fim_screen(screen):
 
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
-
+        now = pygame.time.get_ticks()
+        if now - tempo < 4000:
+            pygame.quit()
     return state
