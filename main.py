@@ -341,6 +341,7 @@ kill_bala_rosa = 5000
 next_bala_roxa = 10000
 kill_bala_roxa = 5000
 
+#tela inicio
 state = init_screen(window)
 
 if state !=GAME:
