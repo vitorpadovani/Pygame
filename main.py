@@ -335,12 +335,12 @@ brx = pygame.sprite.Group()
 tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
-next_bala_azul = 7000
-kill_bala_azul = 7000 
+next_bala_azul = 3000
+kill_bala_azul = 3000 
 next_bala_rosa = 5000
-kill_bala_rosa = 7000
-next_bala_roxa = 5000
-kill_bala_roxa = 7000
+kill_bala_rosa = 5000
+next_bala_roxa = 10000
+kill_bala_roxa = 10000
 
 #tela inicio
 state = init_screen(window)
@@ -494,6 +494,7 @@ while game:
     pygame.display.update()  # Mostra o novo frame para o jogador
 
     if game == False:
+        print(player.score)
         print(fim_screen(window))        
         time.sleep(2)
         pygame.display.update()
