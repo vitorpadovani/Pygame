@@ -3,6 +3,8 @@
 import pygame
 import random
 import math
+from os import path
+from init_screen import *
 
 pygame.init() 
 pygame.mixer.init()
@@ -15,6 +17,7 @@ WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
 HEIGHT_bird = 53
+window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
@@ -26,6 +29,7 @@ espinho_img_e = pygame.transform.scale(espinho_img_e, (40, 40))
 espinho_img_d = pygame.image.load('assets/img/espinho pro lado.png').convert_alpha()
 espinho_img_d = pygame.transform.scale(espinho_img_d, (40, 40))
 espinho_img_d = pygame.transform.flip(espinho_img_d, True,True)
+
 
 espinho_img_cima = pygame.image.load('assets/img/espinho_pra_cima.png').convert_alpha()
 espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
@@ -53,9 +57,16 @@ bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 # background = pygame.transform.scale(background, (480, 650))
 background = pygame.image.load('assets/img/fundo2.png').convert()
 background = pygame.transform.scale(background, (480, 650))
+background2 = pygame.image.load('assets/img/fundo2.png').convert()
+background2 = pygame.transform.scale(background2, (480, 650))
+
+tela_inicio= pygame.image.load('assets/img/inicio.png').convert()
+tela_fim= pygame.image.load('assets/img/fim.png').convert()
+tela_fim= pygame.transform.scale(tela_fim, (480, 650))
+
 
 pygame.mixer.music.load('assets/sounds/M72VSQV-games-logo.mp3')
-pygame.mixer.music.set_volume(0.05)
+pygame.mixer.music.set_volume(1)
 pulo_sound = pygame.mixer.Sound('assets/sounds/mixkit-player-jumping-in-a-video-game-2043.wav')
 perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-471.wav')
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
@@ -118,7 +129,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(30, HEIGHT-30)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
     def __init__(self, img_bala_rosa):
@@ -129,18 +140,18 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(30, HEIGHT-30)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
-# class Bala_roxa(pygame.sprite.Sprite):
-#     def __init__(self, img_bala_roxa):
-#         self.image = img_bala_roxa
-#         pygame.sprite.Sprite.__init__(self)
+class Bala_roxa(pygame.sprite.Sprite):
+    def __init__(self, img_bala_roxa):
+        self.image = img_bala_roxa
+        pygame.sprite.Sprite.__init__(self)
 
-#         # Adicionando a posição da bala
-#         self.rect = self.image.get_rect()
-#         self.mask = pygame.mask.from_surface(self.image)
-#         self.rect.x = WIDTH - 30
-#         self.rect.y = random.randint(30, HEIGHT-30)
+        # Adicionando a posição da bala
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = WIDTH-WIDTH_bala
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
@@ -180,11 +191,14 @@ class Bird(pygame.sprite.Sprite):
                 self.rect.bottom = 610
             if self.rect.top < 40:
                 self.rect.top = 40
-        # if self.cor == 'roxa':
-        #     now = pygame.time.get_ticks()
-        #     if now - self.tempo_poder > 5000:
-        #         self.cor = ''
-        #         player.score += 1 
+            # if self.rect.right < HEIGHT - 30:
+            #     self.rect.right = HEIGHT - 30
+        if self.cor == 'roxa':
+            now = pygame.time.get_ticks()
+            if now - self.tempo_poder > 500:
+                self.cor = ''
+            else:
+                self.score += 1
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -230,15 +244,23 @@ all_espinhos_baixo = pygame.sprite.Group()
 all_espinhos = pygame.sprite.Group()
 esp_e = pygame.sprite.Group()
 esp_d = pygame.sprite.Group()
-batida =  pygame.sprite.Group()
 bala_azul = pygame.sprite.Group()
+bala_preta = pygame.sprite.Group()
 bala_rosa = pygame.sprite.Group()
 bala_roxa = pygame.sprite.Group()
 bala_laranja = pygame.sprite.Group()
 player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
+<<<<<<< HEAD
 
 # Criando os espinhos da parede 1
+=======
+balinha_azul = None
+balinha_rosa = None
+balinha_roxa = None
+
+# Criando os espinhod da parede 1
+>>>>>>> bd427d16eca5be4c5aab30a2e6e5550b9df3ee98
 while len(all_espinhos_e) < 4:
     espinho = Espinho_lado_esquerdo(espinho_img_e)
     hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
@@ -274,15 +296,15 @@ while len(bala_azul) < 1:
     hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
-
-# Criando bala rosa
+# Criando bala azul
 while len(bala_rosa) < 1:
+    # balinha = Bala_azul(img_bala_azul)
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: #and len(hits4) == 0:
         bala_rosa.add(balinha1)
 
 # Criando bala roxa
@@ -311,10 +333,22 @@ all_espinhos.add(all_espinhos_baixo)
 
 esp_e.add(all_espinhos_e)
 esp_d.add(all_espinhos_d)
-batida.add(all_espinhos_e)
-batida.add(all_espinhos_d)
-batida.add(all_espinhos_cima)
-batida.add(all_espinhos_baixo)
+ba = pygame.sprite.Group()
+brs = pygame.sprite.Group()
+brx = pygame.sprite.Group()
+tempo1 = pygame.time.get_ticks()
+tempo2 = pygame.time.get_ticks()
+tempo3 = pygame.time.get_ticks()
+next_bala_azul = 7000
+kill_bala_azul = 5000
+next_bala_rosa = 5000
+kill_bala_rosa = 5000
+next_bala_roxa = 10000
+kill_bala_roxa = 5000
+
+state = init_screen(window)
+if state !=GAME:
+    game=False
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -339,17 +373,53 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
-    # Desenha os sprites
+    
+    # Desenha e apaga os sprites das balas
+    now1 = pygame.time.get_ticks()
+    if balinha_azul == None:
+        if now1 - tempo1 > next_bala_azul:
+            balinha_azul = Bala_azul(img_bala_azul)
+            next_bala_azul *= 2
+            tempo1 = now1
+            ba.add(balinha_azul)
+    else:
+        if now1 - tempo1 > kill_bala_azul:
+            tempo1 = now1
+            balinha_azul.kill()
+            balinha_azul = None
+    if balinha_rosa == None:
+        if now1 - tempo2 > next_bala_rosa:
+            balinha_rosa = Bala_rosa(img_bala_rosa)
+            next_bala_rosa *= 2
+            tempo2 = now1
+            brs.add(balinha_rosa)
+    else:
+        if now1 - tempo2 > kill_bala_rosa:
+            tempo2 = now1
+            balinha_rosa.kill()
+            balinha_rosa = None
+    if balinha_roxa == None:
+        if now1 - tempo3 > next_bala_roxa:
+            balinha_roxa = Bala_rosa(img_bala_roxa)
+            next_bala_roxa *= 2
+            tempo2 = now1
+            brx.add(balinha_roxa)
+    else:
+        if now1 - tempo3 > kill_bala_roxa:
+            tempo2 = now1
+            balinha_roxa.kill()
+            balinha_roxa = None
+
+
     all_sprites.draw(window)
-    if player.score >= 2: 
-        bala_azul.draw(window)
 
-    if player.score >= 6:
-        bala_rosa.draw(window)
-
+    hits = pygame.sprite.spritecollide(player, all_espinhos, True, pygame.sprite.collide_mask)
+    if len(hits) != 0 and player.cor != 'rosa':
+        game = False
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
-        if len(hits) != 0:
+        if len(hits) != 0 and player.cor != 'rosa':
+            perdeu_sound.play()
             game = False 
         esp_d.draw(window)
     else:
@@ -371,7 +441,8 @@ while game:
 
     if player.indo_direita == False:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
-        if len(hits) != 0:
+        if len(hits) != 0 and player.cor != 'rosa':
+            perdeu_sound.play()
             game = False
         esp_e.draw(window)
     else:
@@ -397,25 +468,37 @@ while game:
         game = False
 
     # Pegando a bala azul
-    hits = pygame.sprite.spritecollide(player, bala_azul, True, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(player, ba, True, pygame.sprite.collide_mask)
     if len(hits) > 0:
         player.cor = 'azul'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
 
     # Pegando a bala rosa
-    hits = pygame.sprite.spritecollide(player, bala_rosa, True, pygame.sprite.collide_mask)
+    hits = pygame.sprite.spritecollide(player, brs, True, pygame.sprite.collide_mask)
     if len(hits) > 0:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
+<<<<<<< HEAD
+=======
+
+    # Pegando a bala roxa
+    hits = pygame.sprite.spritecollide(player, brx, True, pygame.sprite.collide_mask)
+    if len(hits) > 0:
+        player.cor = 'roxa'
+        player.tempo_poder = pygame.time.get_ticks()
+        bala_sound.play()
+>>>>>>> bd427d16eca5be4c5aab30a2e6e5550b9df3ee98
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
     text_rect.midtop = (WIDTH / 2,  35)
     window.blit(text_surface, text_rect)
-
+    ba.draw(window)
+    brs.draw(window) 
+    brx.draw(window) 
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
