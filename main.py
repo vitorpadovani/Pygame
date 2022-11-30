@@ -494,7 +494,7 @@ while game:
 
     if game == False:
         print(fim_screen(window))        
-        time.sleep(5)
+        time.sleep(3)
     
         pygame.display.update()
 # ===== Finalização =====

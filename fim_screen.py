@@ -10,7 +10,7 @@ INICIO=3
 OVER=4
 BLACK=(0,0,0)
 
-
+tempo = pygame.time.get_ticks()
 def fim_screen(screen):
     # Variável para o ajuste de velocidade
     clock = pygame.time.Clock()
@@ -20,7 +20,7 @@ def fim_screen(screen):
     tela_fim= pygame.transform.scale(tela_fim, (480, 650))
 
     tela_fim_rect = tela_fim.get_rect()
-
+    tempo = pygame.time.get_ticks()
     running = True
     while running:
 
@@ -39,8 +39,10 @@ def fim_screen(screen):
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         screen.blit(tela_fim, tela_fim_rect)
-
-        # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
+        now = pygame.time.get_ticks()
+        if tempo - now < 4000:
+            pygame.quit()
+        # Depois de desenhar tudo, inverte o display.
 
     return state
