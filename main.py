@@ -5,7 +5,8 @@ import random
 import math
 from os import path
 from init_screen import *
-
+from fim_screen import *
+import time
 pygame.init() 
 pygame.mixer.init()
 
@@ -440,7 +441,6 @@ while game:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
             perdeu_sound.play()
-            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
@@ -480,7 +480,7 @@ while game:
         player.cor = 'roxa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
-    
+
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
     text_rect = text_surface.get_rect()
@@ -492,5 +492,10 @@ while game:
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
+    if game == False:
+        print(fim_screen(window))        
+        time.sleep(5)
+    
+        pygame.display.update()
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
