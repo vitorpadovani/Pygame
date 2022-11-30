@@ -15,7 +15,6 @@ WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
 HEIGHT_bird = 53
-window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
@@ -185,10 +184,7 @@ class Bird(pygame.sprite.Sprite):
         #     now = pygame.time.get_ticks()
         #     if now - self.tempo_poder > 5000:
         #         self.cor = ''
-        #     if self.rect.bottom > 610:
-        #         self.rect.bottom = 610
-        #     if self.rect.top < 40:
-        #         self.rect.top = 40
+        #         player.score += 1
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -243,18 +239,32 @@ player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
 # Criando os espinhos da parede 1
-while len(all_espinhos_e) < 4:
-    espinho = Espinho_lado_esquerdo(espinho_img_e)
-    hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
-    if len(hits) == 0:
-        all_espinhos_e.add(espinho)
+if player.score <= 20:
+    while len(all_espinhos_e) < 4:
+        espinho = Espinho_lado_esquerdo(espinho_img_e)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
+        if len(hits) == 0:
+            all_espinhos_e.add(espinho)
+elif player.score > 20 and player.score <= 40: 
+    while len(all_espinhos_d) < 6:
+        espinho = Espinho_lado_direito(espinho_img_d)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+        if len(hits) == 0:
+            all_espinhos_d.add(espinho)
 
-# Criando os espinhos da parede 2
-while len(all_espinhos_d) < 4:
-    espinho = Espinho_lado_direito(espinho_img_d)
-    hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-    if len(hits) == 0:
-        all_espinhos_d.add(espinho)
+# Criando os espinhos da parede 
+if player.score <= 20: 
+    while len(all_espinhos_d) < 4:
+        espinho = Espinho_lado_direito(espinho_img_d)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+        if len(hits) == 0:
+            all_espinhos_d.add(espinho)
+elif player.score > 20 and player.score <= 40: 
+    while len(all_espinhos_d) < 6:
+        espinho = Espinho_lado_direito(espinho_img_d)
+        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+        if len(hits) == 0:
+            all_espinhos_d.add(espinho)
 
 # Criando os espinhos virados pra cima
 lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
@@ -297,7 +307,7 @@ while len(bala_rosa) < 1:
 #     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
 #     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
 #     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
-#         bala_rosa.add(balinha1)
+#         bala_roxa.add(balinha1)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -355,7 +365,7 @@ while game:
     if player.score % 6 == 0 and player.score != 0:
         bala_rosa.draw(window)  
 
-    # if player.score >= 1:
+    # if player.score >= 10:
     #     bala_roxa.draw(window)
 
     if player.indo_direita == True:
@@ -404,8 +414,6 @@ while game:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
-
-
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
