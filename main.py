@@ -3,6 +3,8 @@
 import pygame
 import random
 import math
+from os import path
+from init_screen import *
 
 pygame.init() 
 pygame.mixer.init()
@@ -15,6 +17,7 @@ WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
 HEIGHT_bird = 53
+window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
@@ -26,6 +29,7 @@ espinho_img_e = pygame.transform.scale(espinho_img_e, (40, 40))
 espinho_img_d = pygame.image.load('assets/img/espinho pro lado.png').convert_alpha()
 espinho_img_d = pygame.transform.scale(espinho_img_d, (40, 40))
 espinho_img_d = pygame.transform.flip(espinho_img_d, True,True)
+
 
 espinho_img_cima = pygame.image.load('assets/img/espinho_pra_cima.png').convert_alpha()
 espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
@@ -53,6 +57,13 @@ bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 # background = pygame.transform.scale(background, (480, 650))
 background = pygame.image.load('assets/img/fundo2.png').convert()
 background = pygame.transform.scale(background, (480, 650))
+background2 = pygame.image.load('assets/img/fundo2.png').convert()
+background2 = pygame.transform.scale(background2, (480, 650))
+
+tela_inicio= pygame.image.load('assets/img/inicio.png').convert()
+tela_fim= pygame.image.load('assets/img/fim.png').convert()
+tela_fim= pygame.transform.scale(tela_fim, (480, 650))
+
 
 pygame.mixer.music.load('assets/sounds/M72VSQV-games-logo.mp3')
 pygame.mixer.music.set_volume(0.05)
@@ -174,7 +185,7 @@ class Bird(pygame.sprite.Sprite):
                     self.rect.x -= 5
         if self.cor == 'rosa':
             now = pygame.time.get_ticks()
-            if now - self.tempo_poder > 10000:
+            if now - self.tempo_poder > 5000:
                 self.cor = ''
             if self.rect.bottom > 610:
                 self.rect.bottom = 610
@@ -239,41 +250,27 @@ all_espinhos_baixo = pygame.sprite.Group()
 all_espinhos = pygame.sprite.Group()
 esp_e = pygame.sprite.Group()
 esp_d = pygame.sprite.Group()
-batida =  pygame.sprite.Group()
 bala_azul = pygame.sprite.Group()
+bala_preta = pygame.sprite.Group()
 bala_rosa = pygame.sprite.Group()
 bala_roxa = pygame.sprite.Group()
 bala_laranja = pygame.sprite.Group()
 player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
 
-# Criando os espinhos da parede 1
-if player.score <= 20:
-    while len(all_espinhos_e) < 4:
-        espinho = Espinho_lado_esquerdo(espinho_img_e)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
-        if len(hits) == 0:
-            all_espinhos_e.add(espinho)
-elif player.score > 20 and player.score <= 40: 
-    while len(all_espinhos_d) < 6:
-        espinho = Espinho_lado_direito(espinho_img_d)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-        if len(hits) == 0:
-            all_espinhos_d.add(espinho)
+# Criando os espinhod da parede 1
+while len(all_espinhos_e) < 4:
+    espinho = Espinho_lado_esquerdo(espinho_img_e)
+    hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
+    if len(hits) == 0:
+        all_espinhos_e.add(espinho)
 
-# Criando os espinhos da parede 
-if player.score <= 20: 
-    while len(all_espinhos_d) < 4:
-        espinho = Espinho_lado_direito(espinho_img_d)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-        if len(hits) == 0:
-            all_espinhos_d.add(espinho)
-elif player.score > 20 and player.score <= 40: 
-    while len(all_espinhos_d) < 6:
-        espinho = Espinho_lado_direito(espinho_img_d)
-        hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
-        if len(hits) == 0:
-            all_espinhos_d.add(espinho)
+# Criando os espinhos da parede 2
+while len(all_espinhos_d) < 4:
+    espinho = Espinho_lado_direito(espinho_img_d)
+    hits = pygame.sprite.spritecollide(espinho, all_espinhos_d, True)
+    if len(hits) == 0:
+        all_espinhos_d.add(espinho)
 
 # Criando os espinhos virados pra cima
 lista_esp_cima = [0,40,80,120,160,200,240,280,320,360,400,440]
@@ -297,15 +294,15 @@ while len(bala_azul) < 1:
     hits3 = pygame.sprite.spritecollide(balinha, all_espinhos_cima, True, pygame.sprite.collide_mask)
     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0:
         bala_azul.add(balinha)
-
-# Criando bala rosa
+# Criando bala azul
 while len(bala_rosa) < 1:
+    # balinha = Bala_azul(img_bala_azul)
     balinha1 = Bala_rosa(img_bala_rosa)
     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: #and len(hits4) == 0:
         bala_rosa.add(balinha1)
 
 # Criando bala roxa
@@ -332,12 +329,13 @@ all_sprites.add(all_espinhos_baixo)
 all_espinhos.add(all_espinhos_cima)
 all_espinhos.add(all_espinhos_baixo)
 
+
 esp_e.add(all_espinhos_e)
 esp_d.add(all_espinhos_d)
-batida.add(all_espinhos_e)
-batida.add(all_espinhos_d)
-batida.add(all_espinhos_cima)
-batida.add(all_espinhos_baixo)
+
+state = init_screen(window)
+if state !=GAME:
+    game=False
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -362,39 +360,24 @@ while game:
     # ----- Gera saídas
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
-    
-    # Desenha os sprites das balas
+    # Desenha os sprites
     all_sprites.draw(window)
-    if player.score >= 15: 
-        bala_azul.draw(window)   
+    if player.score >= 3: 
+        bala_azul.draw(window)
 
-    if player.score >= 2:
+    if player.score >= 8:
         bala_rosa.draw(window)
-
-    if player.score >= 25:
-        bala_roxa.draw(window)
-
-    # Removendo bala rosa da tela
-    if player.score >= 7:
-        balinha1.kill()
-
-    # Removendo bala azul da tela
-    if player.score >= 20:
-        balinha.kill()
-
-    # Removendo bala roxa da tela
-    if player.score >= 30:
-        balinha2.kill()
-
 
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
         if len(hits) != 0:
+            perdeu_sound.play()
             game = False 
         esp_d.draw(window)
     else:
         for espinho in esp_d:
             espinho.kill()
+        # criar lista da esquerda depois de bater
         while len(esp_e) < 4:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
@@ -404,6 +387,7 @@ while game:
     if player.indo_direita == False:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0:
+            perdeu_sound.play()
             game = False
         esp_e.draw(window)
     else:
@@ -416,7 +400,8 @@ while game:
             if len(hits) == 0:
                 esp_d.add(espinho)
 
-    hits = pygame.sprite.spritecollide(player, batida, False, pygame.sprite.collide_mask)
+
+    hits = pygame.sprite.spritecollide(player, all_espinhos, False, pygame.sprite.collide_mask)
     if len(hits) != 0 and player.cor != 'rosa':
         game = False
 
