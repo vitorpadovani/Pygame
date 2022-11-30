@@ -151,7 +151,7 @@ class Bala_roxa(pygame.sprite.Sprite):
         # Adicionando a posição da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = WIDTH-WIDTH_bala
+        self.rect.x =  480 - WIDTH_bala
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
@@ -336,11 +336,11 @@ tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
 next_bala_azul = 7000
-kill_bala_azul = 5000
+kill_bala_azul = 7000 
 next_bala_rosa = 5000
-kill_bala_rosa = 5000
+kill_bala_rosa = 7000
 next_bala_roxa = 10000
-kill_bala_roxa = 5000
+kill_bala_roxa = 7000
 
 #tela inicio
 state = init_screen(window)
@@ -398,13 +398,13 @@ while game:
             balinha_rosa = None
     if balinha_roxa == None:
         if now1 - tempo3 > next_bala_roxa:
-            balinha_roxa = Bala_rosa(img_bala_roxa)
+            balinha_roxa = Bala_rosa(img_bala_roxa) 
             next_bala_roxa *= 2
-            tempo2 = now1
+            tempo3 = now1
             brx.add(balinha_roxa)
     else:
         if now1 - tempo3 > kill_bala_roxa:
-            tempo2 = now1
+            tempo3 = now1
             balinha_roxa.kill()
             balinha_roxa = None
 
