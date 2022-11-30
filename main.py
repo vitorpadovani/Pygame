@@ -174,12 +174,14 @@ class Bird(pygame.sprite.Sprite):
                     self.rect.x -= 5
         if self.cor == 'rosa':
             now = pygame.time.get_ticks()
-            if now - self.tempo_poder > 5000:
+            if now - self.tempo_poder > 10000:
                 self.cor = ''
             if self.rect.bottom > 610:
                 self.rect.bottom = 610
             if self.rect.top < 40:
                 self.rect.top = 40
+            # if self.rect.right < HEIGHT - 30:
+            #     self.rect.right = HEIGHT - 30
         if self.cor == 'roxa':
             now = pygame.time.get_ticks()
             if now - self.tempo_poder > 500:
