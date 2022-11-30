@@ -118,7 +118,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(30, HEIGHT-30)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
     def __init__(self, img_bala_rosa):
@@ -129,7 +129,7 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(30, HEIGHT-30)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
     def __init__(self, img_bala_roxa):
@@ -239,6 +239,9 @@ bala_roxa = pygame.sprite.Group()
 bala_laranja = pygame.sprite.Group()
 player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
+balinha_azul = None
+balinha_rosa = None
+balinha_roxa = None
 
 # Criando os espinhos da parede 1
 if player.score <= 20:
@@ -333,6 +336,12 @@ brx = pygame.sprite.Group()
 tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
+next_bala_azul = 7000
+kill_bala_azul = 5000
+next_bala_rosa = 5000
+kill_bala_rosa = 5000
+next_bala_roxa = 10000
+kill_bala_roxa = 5000
 
 # ===== Loop principal =====
 pygame.mixer.music.play(loops=-1)
@@ -358,42 +367,48 @@ while game:
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     
-    # Desenha os sprites das balas
+    # Desenha e apaga os sprites das balas
     now1 = pygame.time.get_ticks()
-    if now1 - tempo1 > 20000:
-        tempo1 = now1 
-        balinha = Bala_azul(img_bala_azul)
-        ba.add(balinha)
-    now2 = pygame.time.get_ticks()
-    if now2 - tempo2 > 10000:
-        tempo2 = now2
-        balinha1 = Bala_rosa(img_bala_rosa)
-        brs.add(balinha1)
-    now3 = pygame.time.get_ticks()
-    if now3 - tempo3 > 20000:
-        tempo3 = now3
-        balinha2 = Bala_roxa(img_bala_roxa)
-        brx.add(balinha2)
+    if balinha_azul == None:
+        if now1 - tempo1 > next_bala_azul:
+            balinha_azul = Bala_azul(img_bala_azul)
+            next_bala_azul *= 2
+            tempo1 = now1
+            ba.add(balinha_azul)
+    else:
+        if now1 - tempo1 > kill_bala_azul:
+            tempo1 = now1
+            balinha_azul.kill()
+            balinha_azul = None
+    if balinha_rosa == None:
+        if now1 - tempo2 > next_bala_rosa:
+            balinha_rosa = Bala_rosa(img_bala_rosa)
+            next_bala_rosa *= 2
+            tempo2 = now1
+            brs.add(balinha_rosa)
+    else:
+        if now1 - tempo2 > kill_bala_rosa:
+            tempo2 = now1
+            balinha_rosa.kill()
+            balinha_rosa = None
+    if balinha_roxa == None:
+        if now1 - tempo3 > next_bala_roxa:
+            balinha_roxa = Bala_rosa(img_bala_roxa)
+            next_bala_roxa *= 2
+            tempo2 = now1
+            brx.add(balinha_roxa)
+    else:
+        if now1 - tempo3 > kill_bala_roxa:
+            tempo2 = now1
+            balinha_roxa.kill()
+            balinha_roxa = None
+
 
     all_sprites.draw(window)
 
-    # Removendo balas da tela
-    now1 = pygame.time.get_ticks()
-    if now1 - tempo1 > 23000:
-        tempo1 = now1
-        balinha = Bala_azul(img_bala_azul)
-        balinha.kill()
-    now1 = pygame.time.get_ticks()
-    if now1 - tempo1 > 18000:
-        tempo1 = now1
-        balinha1 = Bala_rosa(img_bala_rosa)
-        balinha1.kill()
-    now1 = pygame.time.get_ticks()
-    if now1 - tempo1 > 10000:
-        tempo1 = now1
-        balinha2 = Bala_roxa(img_bala_roxa)
-        balinha2.kill()  
-
+    hits = pygame.sprite.spritecollide(player, all_espinhos, True, pygame.sprite.collide_mask)
+    if len(hits) != 0 and player.cor != 'rosa':
+        game = False
     if player.indo_direita == True:
         hits = pygame.sprite.spritecollide(player, esp_d, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
