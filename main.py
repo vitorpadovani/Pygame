@@ -251,16 +251,11 @@ bala_roxa = pygame.sprite.Group()
 bala_laranja = pygame.sprite.Group()
 player = Bird(bird_img_dir, bird_img_esq)
 all_sprites.add(player)
-<<<<<<< HEAD
-
-# Criando os espinhos da parede 1
-=======
 balinha_azul = None
 balinha_rosa = None
 balinha_roxa = None
 
 # Criando os espinhod da parede 1
->>>>>>> bd427d16eca5be4c5aab30a2e6e5550b9df3ee98
 while len(all_espinhos_e) < 4:
     espinho = Espinho_lado_esquerdo(espinho_img_e)
     hits = pygame.sprite.spritecollide(espinho, all_espinhos_e, True)
@@ -308,14 +303,14 @@ while len(bala_rosa) < 1:
         bala_rosa.add(balinha1)
 
 # Criando bala roxa
-# while len(bala_roxa) < 1:
-#     balinha1 = Bala_rosa(img_bala_roxa)
-#     hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
-#     hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
-#     hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
-#     hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
-#     if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
-#         bala_roxa.add(balinha1)
+while len(bala_roxa) < 1:
+    balinha1 = Bala_rosa(img_bala_roxa)
+    hits = pygame.sprite.spritecollide(balinha1, esp_d, True, pygame.sprite.collide_mask)
+    hits1 = pygame.sprite.spritecollide(balinha1, esp_e, True, pygame.sprite.collide_mask)
+    hits2 = pygame.sprite.spritecollide(balinha1, all_espinhos_baixo, True, pygame.sprite.collide_mask)
+    hits3 = pygame.sprite.spritecollide(balinha1, all_espinhos_cima, True, pygame.sprite.collide_mask)
+    if len(hits) == 0 and len(hits1) == 0 and len(hits2) == 0 and len(hits3) == 0: 
+        bala_roxa.add(balinha1)
 
 # ----- Inicia estruturas de dados
 game = True
@@ -476,8 +471,6 @@ while game:
         player.cor = 'rosa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
-<<<<<<< HEAD
-=======
 
     # Pegando a bala roxa
     hits = pygame.sprite.spritecollide(player, brx, True, pygame.sprite.collide_mask)
@@ -485,7 +478,6 @@ while game:
         player.cor = 'roxa'
         player.tempo_poder = pygame.time.get_ticks()
         bala_sound.play()
->>>>>>> bd427d16eca5be4c5aab30a2e6e5550b9df3ee98
     
     # Desenhando o score
     text_surface = fonte_score.render("{:05d}".format(player.score), True, (255, 255, 0))
