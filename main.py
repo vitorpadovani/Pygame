@@ -184,7 +184,7 @@ class Bird(pygame.sprite.Sprite):
         #     now = pygame.time.get_ticks()
         #     if now - self.tempo_poder > 5000:
         #         self.cor = ''
-        #         player.score += 1
+        #         player.score += 1 
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
