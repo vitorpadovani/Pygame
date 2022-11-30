@@ -463,10 +463,6 @@ while game:
             if len(hits) == 0:
                 esp_d.add(espinho)
 
-    hits = pygame.sprite.spritecollide(player, batida, False, pygame.sprite.collide_mask)
-    if len(hits) != 0 and player.cor != 'rosa':
-        game = False
-
     # Pegando a bala azul
     hits = pygame.sprite.spritecollide(player, ba, True, pygame.sprite.collide_mask)
     if len(hits) > 0:
