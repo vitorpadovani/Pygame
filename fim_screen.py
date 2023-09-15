@@ -12,7 +12,7 @@ BLACK=(0,0,0)
 
 
 def fim_screen(screen):
-    # Variável para o ajuste de velocidade
+    # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
@@ -27,7 +27,7 @@ def fim_screen(screen):
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
 
-        # Processa os eventos (mouse, teclado, botão, etc).
+        # Processa os eventos (mouse, teclado, botÃ£o, etc).
         for event in pygame.event.get():
             # Verifica se foi fechado.
             if event.type == pygame.QUIT:

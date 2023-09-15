@@ -1,4 +1,4 @@
-# ===== Inicialização =====
+# ===== InicializaÃ§Ã£o =====
 # ----- Importa e inicia pacotes
 import pygame
 import random
@@ -30,11 +30,11 @@ img_bala_laranja = pygame.transform.scale(img_bala_laranja, (HEIGHT_bala, WIDTH_
 #lista_posic_y = [0,30,60,90,120,150,180,210,240,270,300,330,360,390,420,450,480,510,540,570]
 
 class Bala_azul(pygame.sprite.Sprite):
-    def __init__(self,img_bala_azul,y):
+    def _init_(self,img_bala_azul,y):
         self.image = img_bala_azul
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-30)
@@ -71,11 +71,11 @@ pygame.mixer.music.play(loops=-1)
 while game:
     # ----- Trata eventos
     for event in pygame.event.get():
-        # ----- Verifica consequências
+        # ----- Verifica consequÃªncias
         if event.type == pygame.QUIT:
             game = False
 
-    # ----- Gera saídas
+    # ----- Gera saÃ­das
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
    # window.blit(meteor_img_small, (meteor_x, meteor_y))
@@ -86,6 +86,5 @@ while game:
     # ----- Atualiza estado do jogo
     pygame.display.update()  # Mostra o novo frame para o jogador
 
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
-
+# ===== FinalizaÃ§Ã£o =====
+pygame.quit()  # FunÃ§Ã£o do PyGame que finaliza os recursos utilizados

@@ -1,4 +1,4 @@
-# ===== Inicialização =====
+# ===== InicializaÃ§Ã£o =====
 # ----- Importa e inicia pacotes
 import pygame
 import random
@@ -26,7 +26,7 @@ bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 
 # ----- Inicia estruturas de dados
 game = True
-# Variável para o ajuste de velocidade
+# VariÃ¡vel para o ajuste de velocidade
 clock = pygame.time.Clock()
 FPS = 40
 
@@ -37,8 +37,8 @@ aplica_gravidade = False
 ACELERACAO = 0.8
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self, bird_img_dir, bird_img_esq):
-        # Construtor da classe mãe (Sprite).
+    def _init_(self, bird_img_dir, bird_img_esq):
+        # Construtor da classe mÃ£e (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
         self.image = bird_img_dir
@@ -46,7 +46,7 @@ class Bird(pygame.sprite.Sprite):
         self.image_esq = bird_img_esq
         self.rect = self.image.get_rect()
 
-        #posição inicial da bola
+        #posiÃ§Ã£o inicial da bola
         self.rect.centerx = (WIDTH/2)
         self.rect.bottom = HEIGHT/2
 
@@ -54,7 +54,7 @@ class Bird(pygame.sprite.Sprite):
         self.bird_speed_y = 0 
 
     def update(self):
-        # Atualização da posição do passaro
+        # AtualizaÃ§Ã£o da posiÃ§Ã£o do passaro
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -75,7 +75,7 @@ class Bird(pygame.sprite.Sprite):
             self.rect.y += self.bird_speed_y
             self.rect.x += self.bird_speed_x
 
-print('aperte espaço para pular com a bola')
+print('aperte espaÃ§o para pular com a bola')
 
 all_sprites = pygame.sprite.Group()
 player = Bird(bird_img_dir, bird_img_esq)
@@ -85,7 +85,7 @@ while game:
 
     # ----- Trata eventos
     for event in pygame.event.get():
-        # ----- Verifica consequências
+        # ----- Verifica consequÃªncias
         if event.type == pygame.QUIT:
             game = False
 
@@ -123,7 +123,7 @@ while game:
     #     bird_x += bird_speed_x
     #     bird_img = bird_img1
 
-    # ----- Gera saídas
+    # ----- Gera saÃ­das
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     # Desenhando o passaro na janela
@@ -131,7 +131,7 @@ while game:
     #window.blit(player)
     pygame.display.update()  # Mostra o novo frame para o jogador
 
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+# ===== FinalizaÃ§Ã£o =====
+pygame.quit()  # FunÃ§Ã£o do PyGame que finaliza os recursos utilizados
 
 #teste

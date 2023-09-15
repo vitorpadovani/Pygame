@@ -1,4 +1,4 @@
-# ===== Inicialização =====
+# ===== InicializaÃ§Ã£o =====
 # ----- Importa e inicia pacotes
 import pygame
 import random
@@ -26,7 +26,7 @@ bird_img = pygame.transform.scale(bird_img, (HEIGHT_bird, WIDTH_bird))
 
 # ----- Inicia estruturas de dados
 game = True
-# Variável para o ajuste de velocidade
+# VariÃ¡vel para o ajuste de velocidade
 clock = pygame.time.Clock()
 FPS = 40
 
@@ -35,8 +35,8 @@ aplica_gravidade = False
 
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self, bird_img_dir, bird_img_esq):
-        # Construtor da classe mãe (Sprite).
+    def _init_(self, bird_img_dir, bird_img_esq):
+        # Construtor da classe mÃ£e (Sprite).
         pygame.sprite.Sprite.__init__(self)
 
         self.image = bird_img_dir
@@ -49,7 +49,7 @@ class Bird(pygame.sprite.Sprite):
         self.bird_speed_y = 0 
 
     def update(self):
-        # Atualização da posição do passaro
+        # AtualizaÃ§Ã£o da posiÃ§Ã£o do passaro
         self.rect.x += self.bird_speed_x
         self.rect.y += self.bird_speed_y
 
@@ -76,7 +76,7 @@ class Bird(pygame.sprite.Sprite):
             self.rect.x += self.bird_speed_x
 
 
-#posição inicial do passaro
+#posiÃ§Ã£o inicial do passaro
 bird_x = (WIDTH/2)
 bird_y = HEIGHT/2
 
@@ -94,7 +94,7 @@ while game:
     # ----- Trata eventos
     for event in pygame.event.get():
 
-        # ----- Verifica consequências
+        # ----- Verifica consequÃªncias
         if event.type == pygame.QUIT:
             game = False
 
@@ -110,7 +110,7 @@ while game:
     # ----- Atualiza estado do jogo
     all_sprites.update()
 
-    # ----- Gera saídas
+    # ----- Gera saÃ­das
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     # Desenhando o passaro na janela
@@ -118,5 +118,5 @@ while game:
     #window.blit(player)
     pygame.display.update()  # Mostra o novo frame para o jogador
 
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+# ===== FinalizaÃ§Ã£o =====
+pygame.quit()  # FunÃ§Ã£o do PyGame que finaliza os recursos utilizados

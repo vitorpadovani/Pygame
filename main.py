@@ -335,10 +335,10 @@ brx = pygame.sprite.Group()
 tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
-next_bala_azul = 3000
-kill_bala_azul = 3000 
+next_bala_azul = 7000
+kill_bala_azul = 7000 
 next_bala_rosa = 5000
-kill_bala_rosa = 5000
+kill_bala_rosa = 7000
 next_bala_roxa = 10000
 kill_bala_roxa = 7000
 
@@ -430,7 +430,7 @@ while game:
         elif player.score > 24 and player.score <= 35:
             qtd_espinho = 7
         elif player.score > 35:
-            qtd_espinho = 8
+            qtd_espinho = 9
         while len(esp_e) < qtd_espinho:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
@@ -441,7 +441,6 @@ while game:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
             perdeu_sound.play()
-            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
@@ -454,7 +453,7 @@ while game:
         elif player.score > 28 and player.score <= 40:
             qtd_espinho = 7
         elif player.score > 40:
-            qtd_espinho = 8
+            qtd_espinho = 9
         while len(esp_d) < qtd_espinho:
             espinho = Espinho_lado_direito(espinho_img_d)
             hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
@@ -494,9 +493,9 @@ while game:
     pygame.display.update()  # Mostra o novo frame para o jogador
 
     if game == False:
-        print(player.score)
         print(fim_screen(window))        
-        time.sleep(2)
+        time.sleep(3)
+    
         pygame.display.update()
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
