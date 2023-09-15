@@ -75,7 +75,7 @@ fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_e):
+    def _init_(self,espinho_img_e):
         self.image = espinho_img_e
         pygame.sprite.Sprite.__init__(self)
 
@@ -87,7 +87,7 @@ class Espinho_lado_esquerdo(pygame.sprite.Sprite):
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_lado_direito(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_d):
+    def _init_(self,espinho_img_d):
         self.image = espinho_img_d
         self.image = pygame.transform.flip(espinho_img_d,True,False)
         pygame.sprite.Sprite.__init__(self)
@@ -100,7 +100,7 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_cima,x):
+    def _init_(self,espinho_img_cima,x):
         self.image = espinho_img_cima 
         pygame.sprite.Sprite.__init__(self)
 
@@ -111,7 +111,7 @@ class Espinho_pra_cima(pygame.sprite.Sprite):
         self.rect.y = 610
 
 class Espinho_pra_baixo(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_baixo,x):
+    def _init_(self,espinho_img_baixo,x):
         self.image = espinho_img_baixo
         pygame.sprite.Sprite.__init__(self)
 
@@ -122,7 +122,7 @@ class Espinho_pra_baixo(pygame.sprite.Sprite):
         self.rect.y = 0
 
 class Bala_azul(pygame.sprite.Sprite):
-    def __init__(self,img_bala_azul):
+    def _init_(self,img_bala_azul):
         self.image = img_bala_azul
         pygame.sprite.Sprite.__init__(self)
 
@@ -133,7 +133,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_rosa):
+    def _init_(self, img_bala_rosa):
         self.image = img_bala_rosa
         pygame.sprite.Sprite.__init__(self)
 
@@ -144,7 +144,7 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_roxa):
+    def _init_(self, img_bala_roxa):
         self.image = img_bala_roxa
         pygame.sprite.Sprite.__init__(self)
 
@@ -155,7 +155,7 @@ class Bala_roxa(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self, bird_img_dir, bird_img_esq):
+    def _init_(self, bird_img_dir, bird_img_esq):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
         self.ultima_atualizacao = pygame.time.get_ticks()
@@ -335,10 +335,10 @@ brx = pygame.sprite.Group()
 tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
-next_bala_azul = 7000
-kill_bala_azul = 7000 
+next_bala_azul = 3000
+kill_bala_azul = 3000 
 next_bala_rosa = 5000
-kill_bala_rosa = 7000
+kill_bala_rosa = 5000
 next_bala_roxa = 10000
 kill_bala_roxa = 7000
 
@@ -430,7 +430,7 @@ while game:
         elif player.score > 24 and player.score <= 35:
             qtd_espinho = 7
         elif player.score > 35:
-            qtd_espinho = 9
+            qtd_espinho = 8
         while len(esp_e) < qtd_espinho:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
@@ -441,6 +441,7 @@ while game:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
             perdeu_sound.play()
+            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
@@ -453,7 +454,7 @@ while game:
         elif player.score > 28 and player.score <= 40:
             qtd_espinho = 7
         elif player.score > 40:
-            qtd_espinho = 9
+            qtd_espinho = 8
         while len(esp_d) < qtd_espinho:
             espinho = Espinho_lado_direito(espinho_img_d)
             hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
@@ -493,9 +494,9 @@ while game:
     pygame.display.update()  # Mostra o novo frame para o jogador
 
     if game == False:
+        print(player.score)
         print(fim_screen(window))        
-        time.sleep(3)
-    
+        time.sleep(2)
         pygame.display.update()
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
