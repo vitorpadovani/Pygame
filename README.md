@@ -16,4 +16,8 @@ Para iniciar o jogo é necessário dar o run e assim seguir as regras...
 Para pular a tecla é "Espaço"
 
 # Vídeo do jogo rodando
+<<<<<<< HEAD
 https://youtube.com/shorts/gbyKXFwqgFo?feature=share
+=======
+https://youtube.com/shorts/gbyKXFwqgFo?feature=share
+>>>>>>> f9a60057c2ba64b3f628836f3c5eeccb148e3d98
