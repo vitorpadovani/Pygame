@@ -10,9 +10,9 @@ INICIO=3
 OVER=4
 BLACK=(0,0,0)
 
-tempo = pygame.time.get_ticks()
+
 def fim_screen(screen):
-    # Variável para o ajuste de velocidade
+    # VariÃ¡vel para o ajuste de velocidade
     clock = pygame.time.Clock()
 
     # Carrega o fundo da tela inicial
@@ -27,7 +27,7 @@ def fim_screen(screen):
         # Ajusta a velocidade do jogo.
         clock.tick(FPS)
 
-        # Processa os eventos (mouse, teclado, botão, etc).
+        # Processa os eventos (mouse, teclado, botÃ£o, etc).
         for event in pygame.event.get():
             # Verifica se foi fechado.
             if event.type == pygame.QUIT:
@@ -39,15 +39,10 @@ def fim_screen(screen):
         # A cada loop, redesenha o fundo e os sprites
         screen.fill(BLACK)
         screen.blit(tela_fim, tela_fim_rect)
+
+        # Depois de desenhar tudo, inverte o display.
         pygame.display.flip()
         now = pygame.time.get_ticks()
-<<<<<<< HEAD
-        if tempo - now < 4000:
-            pygame.quit()
-        # Depois de desenhar tudo, inverte o display.
-
-=======
         if now - tempo < 4000:
             pygame.quit()
->>>>>>> f9a60057c2ba64b3f628836f3c5eeccb148e3d98
     return state

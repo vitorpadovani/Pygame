@@ -1,4 +1,4 @@
-# ===== Inicialização =====
+# ===== InicializaÃ§Ã£o =====
 # ----- Importa e inicia pacotes
 import pygame
 import random
@@ -75,88 +75,88 @@ fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_e):
+    def _init_(self,espinho_img_e):
         self.image = espinho_img_e
         pygame.sprite.Sprite.__init__(self)
 
-        # Atualizando a posição do espinho
-        # Sorteando a posição do espinho
+        # Atualizando a posiÃ§Ã£o do espinho
+        # Sorteando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_lado_direito(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_d):
+    def _init_(self,espinho_img_d):
         self.image = espinho_img_d
         self.image = pygame.transform.flip(espinho_img_d,True,False)
         pygame.sprite.Sprite.__init__(self)
 
-        # Atualizando a posição do espinho
-        # Sorteando a posição do espinho
+        # Atualizando a posiÃ§Ã£o do espinho
+        # Sorteando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect() 
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 440
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_cima,x):
+    def _init_(self,espinho_img_cima,x):
         self.image = espinho_img_cima 
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição do espinho
+        # Adicionando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = x
         self.rect.y = 610
 
 class Espinho_pra_baixo(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_baixo,x):
+    def _init_(self,espinho_img_baixo,x):
         self.image = espinho_img_baixo
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição do espinho
+        # Adicionando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = x
         self.rect.y = 0
 
 class Bala_azul(pygame.sprite.Sprite):
-    def __init__(self,img_bala_azul):
+    def _init_(self,img_bala_azul):
         self.image = img_bala_azul
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_rosa):
+    def _init_(self, img_bala_rosa):
         self.image = img_bala_rosa
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_roxa):
+    def _init_(self, img_bala_roxa):
         self.image = img_bala_roxa
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x =  480 - WIDTH_bala
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self, bird_img_dir, bird_img_esq):
-        # Construtor da classe mãe (Sprite).
+    def _init_(self, bird_img_dir, bird_img_esq):
+        # Construtor da classe mÃ£e (Sprite).
         pygame.sprite.Sprite.__init__(self)
         self.ultima_atualizacao = pygame.time.get_ticks()
         self.score = 0
@@ -174,7 +174,7 @@ class Bird(pygame.sprite.Sprite):
         self.indo_direita = True
 
     def update(self):
-        # Atualização da posição do passaro
+        # AtualizaÃ§Ã£o da posiÃ§Ã£o do passaro
         if self.cor == 'azul':
             now = pygame.time.get_ticks()
             if now - self.tempo_poder > 5000:
@@ -340,7 +340,7 @@ kill_bala_azul = 3000
 next_bala_rosa = 5000
 kill_bala_rosa = 5000
 next_bala_roxa = 10000
-kill_bala_roxa = 10000
+kill_bala_roxa = 7000
 
 #tela inicio
 state = init_screen(window)
@@ -354,7 +354,7 @@ while game:
     clock.tick(FPS)
     # ----- Trata eventos
     for event in pygame.event.get():
-        # ----- Verifica consequências
+        # ----- Verifica consequÃªncias
         if event.type == pygame.QUIT:
             game = False
         if event.type == pygame.KEYDOWN:
@@ -368,7 +368,7 @@ while game:
             aplica_gravidade = True
 
     all_sprites.update() 
-    # ----- Gera saídas
+    # ----- Gera saÃ­das
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     
@@ -399,7 +399,7 @@ while game:
     if balinha_roxa == None:
         if now1 - tempo3 > next_bala_roxa:
             balinha_roxa = Bala_rosa(img_bala_roxa) 
-            next_bala_roxa *= 1
+            next_bala_roxa *= 2
             tempo3 = now1
             brx.add(balinha_roxa)
     else:
@@ -496,12 +496,7 @@ while game:
     if game == False:
         print(player.score)
         print(fim_screen(window))        
-<<<<<<< HEAD
-        time.sleep(3)
-    
-=======
         time.sleep(2)
->>>>>>> f9a60057c2ba64b3f628836f3c5eeccb148e3d98
         pygame.display.update()
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+# ===== FinalizaÃ§Ã£o =====
+pygame.quit()  # FunÃ§Ã£o do PyGame que finaliza os recursos utilizados
