@@ -41,8 +41,13 @@ def fim_screen(screen):
         screen.blit(tela_fim, tela_fim_rect)
         pygame.display.flip()
         now = pygame.time.get_ticks()
+<<<<<<< HEAD
         if tempo - now < 4000:
             pygame.quit()
         # Depois de desenhar tudo, inverte o display.
 
+=======
+        if now - tempo < 4000:
+            pygame.quit()
+>>>>>>> f9a60057c2ba64b3f628836f3c5eeccb148e3d98
     return state
