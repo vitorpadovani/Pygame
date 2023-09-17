@@ -99,7 +99,7 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         self.rect = self.image.get_rect() 
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 440
-        self.rect.y = random.randint(40, HEIGHT-60)
+        self.rect.y = random.randint(H_ESP, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
     def __init__(self,espinho_img_cima,x):
@@ -132,7 +132,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(30, HEIGHT-60)
+        self.rect.y = random.randint(H_ESP-10, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
     def __init__(self, img_bala_rosa):
@@ -143,7 +143,7 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(30, HEIGHT-60)
+        self.rect.y = random.randint(H_ESP-10, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
     def __init__(self, img_bala_roxa):
@@ -154,7 +154,7 @@ class Bala_roxa(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x =  480 - WIDTH_bala
-        self.rect.y = random.randint(30, HEIGHT-60)
+        self.rect.y = random.randint(H_ESP-10, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
     def __init__(self, bird_img_dir, bird_img_esq):
