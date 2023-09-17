@@ -17,6 +17,8 @@ HEIGHT = 650
 WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
+W_ESP = 40
+H_ESP = 40
 HEIGHT_bird = 53
 window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -25,18 +27,18 @@ pygame.display.set_caption('Spikes!')
 
 # ---- Inicia assets 
 espinho_img_e = pygame.image.load('assets/img/espinho.png').convert_alpha()
-espinho_img_e = pygame.transform.scale(espinho_img_e, (40, 40))
+espinho_img_e = pygame.transform.scale(espinho_img_e, (H_ESP, W_ESP))
 
 espinho_img_d = pygame.image.load('assets/img/espinho pro lado.png').convert_alpha()
-espinho_img_d = pygame.transform.scale(espinho_img_d, (40, 40))
+espinho_img_d = pygame.transform.scale(espinho_img_d, (H_ESP, W_ESP))
 espinho_img_d = pygame.transform.flip(espinho_img_d, True,True)
 
 
 espinho_img_cima = pygame.image.load('assets/img/espinho_pra_cima.png').convert_alpha()
-espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
+espinho_img_cima = pygame.transform.scale(espinho_img_cima, (W_ESP, H_ESP))
 
 espinho_img_baixo = pygame.image.load('assets/img/espinho_pra_baixo.png').convert_alpha()
-espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (40, 40))
+espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (W_ESP, H_ESP))
 
 img_bala_azul = pygame.image.load('assets/img/balaazul.png').convert_alpha()
 img_bala_rosa = pygame.image.load('assets/img/balarosa.png').convert_alpha()
@@ -75,7 +77,7 @@ fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_e):
+    def __init__(self,espinho_img_e):
         self.image = espinho_img_e
         pygame.sprite.Sprite.__init__(self)
 
@@ -87,7 +89,7 @@ class Espinho_lado_esquerdo(pygame.sprite.Sprite):
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_lado_direito(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_d):
+    def __init__(self,espinho_img_d):
         self.image = espinho_img_d
         self.image = pygame.transform.flip(espinho_img_d,True,False)
         pygame.sprite.Sprite.__init__(self)
@@ -100,7 +102,7 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_cima,x):
+    def __init__(self,espinho_img_cima,x):
         self.image = espinho_img_cima 
         pygame.sprite.Sprite.__init__(self)
 
@@ -111,7 +113,7 @@ class Espinho_pra_cima(pygame.sprite.Sprite):
         self.rect.y = 610
 
 class Espinho_pra_baixo(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_baixo,x):
+    def __init__(self,espinho_img_baixo,x):
         self.image = espinho_img_baixo
         pygame.sprite.Sprite.__init__(self)
 
@@ -122,7 +124,7 @@ class Espinho_pra_baixo(pygame.sprite.Sprite):
         self.rect.y = 0
 
 class Bala_azul(pygame.sprite.Sprite):
-    def _init_(self,img_bala_azul):
+    def __init__(self,img_bala_azul):
         self.image = img_bala_azul
         pygame.sprite.Sprite.__init__(self)
 
@@ -133,7 +135,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
-    def _init_(self, img_bala_rosa):
+    def __init__(self, img_bala_rosa):
         self.image = img_bala_rosa
         pygame.sprite.Sprite.__init__(self)
 
@@ -144,7 +146,7 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
-    def _init_(self, img_bala_roxa):
+    def __init__(self, img_bala_roxa):
         self.image = img_bala_roxa
         pygame.sprite.Sprite.__init__(self)
 
@@ -155,7 +157,7 @@ class Bala_roxa(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
-    def _init_(self, bird_img_dir, bird_img_esq):
+    def __init__(self, bird_img_dir, bird_img_esq):
         # Construtor da classe mãe (Sprite).
         pygame.sprite.Sprite.__init__(self)
         self.ultima_atualizacao = pygame.time.get_ticks()
@@ -335,10 +337,10 @@ brx = pygame.sprite.Group()
 tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
-next_bala_azul = 3000
-kill_bala_azul = 3000 
+next_bala_azul = 7000
+kill_bala_azul = 7000 
 next_bala_rosa = 5000
-kill_bala_rosa = 5000
+kill_bala_rosa = 7000
 next_bala_roxa = 10000
 kill_bala_roxa = 7000
 
@@ -430,7 +432,7 @@ while game:
         elif player.score > 24 and player.score <= 35:
             qtd_espinho = 7
         elif player.score > 35:
-            qtd_espinho = 8
+            qtd_espinho = 9
         while len(esp_e) < qtd_espinho:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
@@ -441,7 +443,6 @@ while game:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
             perdeu_sound.play()
-            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
@@ -454,7 +455,7 @@ while game:
         elif player.score > 28 and player.score <= 40:
             qtd_espinho = 7
         elif player.score > 40:
-            qtd_espinho = 8
+            qtd_espinho = 9
         while len(esp_d) < qtd_espinho:
             espinho = Espinho_lado_direito(espinho_img_d)
             hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
@@ -496,7 +497,8 @@ while game:
     if game == False:
         print(player.score)
         print(fim_screen(window))        
-        time.sleep(2)
+        time.sleep(3)
+    
         pygame.display.update()
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
