@@ -75,7 +75,7 @@ fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
 
 class Espinho_lado_esquerdo(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_e):
+    def __init__(self,espinho_img_e):
         self.image = espinho_img_e
         pygame.sprite.Sprite.__init__(self)
 
@@ -87,7 +87,7 @@ class Espinho_lado_esquerdo(pygame.sprite.Sprite):
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_lado_direito(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_d):
+    def __init__(self,espinho_img_d):
         self.image = espinho_img_d
         self.image = pygame.transform.flip(espinho_img_d,True,False)
         pygame.sprite.Sprite.__init__(self)
@@ -100,7 +100,7 @@ class Espinho_lado_direito(pygame.sprite.Sprite):
         self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_cima,x):
+    def __init__(self,espinho_img_cima,x):
         self.image = espinho_img_cima 
         pygame.sprite.Sprite.__init__(self)
 
@@ -111,7 +111,7 @@ class Espinho_pra_cima(pygame.sprite.Sprite):
         self.rect.y = 610
 
 class Espinho_pra_baixo(pygame.sprite.Sprite):
-    def _init_(self,espinho_img_baixo,x):
+    def __init__(self,espinho_img_baixo,x):
         self.image = espinho_img_baixo
         pygame.sprite.Sprite.__init__(self)
 
@@ -122,7 +122,7 @@ class Espinho_pra_baixo(pygame.sprite.Sprite):
         self.rect.y = 0
 
 class Bala_azul(pygame.sprite.Sprite):
-    def _init_(self,img_bala_azul):
+    def __init__(self,img_bala_azul):
         self.image = img_bala_azul
         pygame.sprite.Sprite.__init__(self)
 
@@ -133,7 +133,7 @@ class Bala_azul(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
-    def _init_(self, img_bala_rosa):
+    def __init__(self, img_bala_rosa):
         self.image = img_bala_rosa
         pygame.sprite.Sprite.__init__(self)
 
@@ -144,7 +144,7 @@ class Bala_rosa(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
-    def _init_(self, img_bala_roxa):
+    def __init__(self, img_bala_roxa):
         self.image = img_bala_roxa
         pygame.sprite.Sprite.__init__(self)
 
@@ -155,7 +155,7 @@ class Bala_roxa(pygame.sprite.Sprite):
         self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
-    def _init_(self, bird_img_dir, bird_img_esq):
+    def __init__(self, bird_img_dir, bird_img_esq):
         # Construtor da classe mÃ£e (Sprite).
         pygame.sprite.Sprite.__init__(self)
         self.ultima_atualizacao = pygame.time.get_ticks()
