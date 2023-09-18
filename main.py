@@ -1,4 +1,4 @@
-# ===== Inicialização =====
+# ===== InicializaÃ§Ã£o =====
 # ----- Importa e inicia pacotes
 import pygame
 import random
@@ -17,27 +17,26 @@ HEIGHT = 650
 WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
-W_ESP = 40
-H_ESP = 40
 HEIGHT_bird = 53
 window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
+
 # ---- Inicia assets 
 espinho_img_e = pygame.image.load('assets/img/espinho.png').convert_alpha()
-espinho_img_e = pygame.transform.scale(espinho_img_e, (H_ESP, W_ESP))
+espinho_img_e = pygame.transform.scale(espinho_img_e, (40, 40))
 
 espinho_img_d = pygame.image.load('assets/img/espinho pro lado.png').convert_alpha()
-espinho_img_d = pygame.transform.scale(espinho_img_d, (H_ESP, W_ESP))
+espinho_img_d = pygame.transform.scale(espinho_img_d, (40, 40))
 espinho_img_d = pygame.transform.flip(espinho_img_d, True,True)
 
 
 espinho_img_cima = pygame.image.load('assets/img/espinho_pra_cima.png').convert_alpha()
-espinho_img_cima = pygame.transform.scale(espinho_img_cima, (W_ESP, H_ESP))
+espinho_img_cima = pygame.transform.scale(espinho_img_cima, (40, 40))
 
 espinho_img_baixo = pygame.image.load('assets/img/espinho_pra_baixo.png').convert_alpha()
-espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (W_ESP, H_ESP))
+espinho_img_baixo = pygame.transform.scale(espinho_img_baixo, (40, 40))
 
 img_bala_azul = pygame.image.load('assets/img/balaazul.png').convert_alpha()
 img_bala_rosa = pygame.image.load('assets/img/balarosa.png').convert_alpha()
@@ -74,83 +73,90 @@ perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-4
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
 fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
-class Espinho(pygame.sprite.Sprite):
-    def __init__(self, image, x_position):
-        super().__init__()
-        self.image = image
+
+class Espinho_lado_esquerdo(pygame.sprite.Sprite):
+    def _init_(self,espinho_img_e):
+        self.image = espinho_img_e
         pygame.sprite.Sprite.__init__(self)
 
+        # Atualizando a posiÃ§Ã£o do espinho
+        # Sorteando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = x_position
+        self.rect.x = 0
         self.rect.y = random.randint(40, HEIGHT-60)
 
-class Espinho_lado_esquerdo(Espinho):
-    def __init__(self, espinho_img_e):
-        super().__init__(espinho_img_e, 0)
+class Espinho_lado_direito(pygame.sprite.Sprite):
+    def _init_(self,espinho_img_d):
+        self.image = espinho_img_d
+        self.image = pygame.transform.flip(espinho_img_d,True,False)
+        pygame.sprite.Sprite.__init__(self)
 
-class Espinho_lado_direito(Espinho):
-    def __init__(self, espinho_img_d):
-        super().__init__(pygame.transform.flip(espinho_img_d, True, False), 440)
+        # Atualizando a posiÃ§Ã£o do espinho
+        # Sorteando a posiÃ§Ã£o do espinho
+        self.rect = self.image.get_rect() 
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 440
+        self.rect.y = random.randint(40, HEIGHT-60)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_cima,x):
+    def _init_(self,espinho_img_cima,x):
         self.image = espinho_img_cima 
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição do espinho
+        # Adicionando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = x
         self.rect.y = 610
 
 class Espinho_pra_baixo(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_baixo,x):
+    def _init_(self,espinho_img_baixo,x):
         self.image = espinho_img_baixo
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição do espinho
+        # Adicionando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = x
         self.rect.y = 0
 
 class Bala_azul(pygame.sprite.Sprite):
-    def __init__(self,img_bala_azul):
+    def _init_(self,img_bala_azul):
         self.image = img_bala_azul
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(H_ESP-10, HEIGHT-60)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_rosa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_rosa):
+    def _init_(self, img_bala_rosa):
         self.image = img_bala_rosa
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 0
-        self.rect.y = random.randint(H_ESP-10, HEIGHT-60)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bala_roxa(pygame.sprite.Sprite):
-    def __init__(self, img_bala_roxa):
+    def _init_(self, img_bala_roxa):
         self.image = img_bala_roxa
         pygame.sprite.Sprite.__init__(self)
 
-        # Adicionando a posição da bala
+        # Adicionando a posiÃ§Ã£o da bala
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x =  480 - WIDTH_bala
-        self.rect.y = random.randint(H_ESP-10, HEIGHT-60)
+        self.rect.y = random.randint(30, HEIGHT-60)
 
 class Bird(pygame.sprite.Sprite):
-    def __init__(self, bird_img_dir, bird_img_esq):
-        # Construtor da classe mãe (Sprite).
+    def _init_(self, bird_img_dir, bird_img_esq):
+        # Construtor da classe mÃ£e (Sprite).
         pygame.sprite.Sprite.__init__(self)
         self.ultima_atualizacao = pygame.time.get_ticks()
         self.score = 0
@@ -168,7 +174,7 @@ class Bird(pygame.sprite.Sprite):
         self.indo_direita = True
 
     def update(self):
-        # Atualização da posição do passaro
+        # AtualizaÃ§Ã£o da posiÃ§Ã£o do passaro
         if self.cor == 'azul':
             now = pygame.time.get_ticks()
             if now - self.tempo_poder > 5000:
@@ -329,10 +335,10 @@ brx = pygame.sprite.Group()
 tempo1 = pygame.time.get_ticks()
 tempo2 = pygame.time.get_ticks()
 tempo3 = pygame.time.get_ticks()
-next_bala_azul = 7000
-kill_bala_azul = 7000 
+next_bala_azul = 3000
+kill_bala_azul = 3000 
 next_bala_rosa = 5000
-kill_bala_rosa = 7000
+kill_bala_rosa = 5000
 next_bala_roxa = 10000
 kill_bala_roxa = 7000
 
@@ -348,7 +354,7 @@ while game:
     clock.tick(FPS)
     # ----- Trata eventos
     for event in pygame.event.get():
-        # ----- Verifica consequências
+        # ----- Verifica consequÃªncias
         if event.type == pygame.QUIT:
             game = False
         if event.type == pygame.KEYDOWN:
@@ -362,7 +368,7 @@ while game:
             aplica_gravidade = True
 
     all_sprites.update() 
-    # ----- Gera saídas
+    # ----- Gera saÃ­das
     window.fill((0, 0, 0))  # Preenche com a cor branca
     window.blit(background, (0, 0))
     
@@ -424,7 +430,7 @@ while game:
         elif player.score > 24 and player.score <= 35:
             qtd_espinho = 7
         elif player.score > 35:
-            qtd_espinho = 9
+            qtd_espinho = 8
         while len(esp_e) < qtd_espinho:
             espinho = Espinho_lado_esquerdo(espinho_img_e)
             hits = pygame.sprite.spritecollide(espinho, esp_e, True, pygame.sprite.collide_mask)
@@ -435,6 +441,7 @@ while game:
         hits = pygame.sprite.spritecollide(player, esp_e, True, pygame.sprite.collide_mask)
         if len(hits) != 0 and player.cor != 'rosa':
             perdeu_sound.play()
+            game = False
         esp_e.draw(window)
     else:
         for espinho in esp_e:
@@ -447,7 +454,7 @@ while game:
         elif player.score > 28 and player.score <= 40:
             qtd_espinho = 7
         elif player.score > 40:
-            qtd_espinho = 9
+            qtd_espinho = 8
         while len(esp_d) < qtd_espinho:
             espinho = Espinho_lado_direito(espinho_img_d)
             hits = pygame.sprite.spritecollide(espinho, esp_d, True, pygame.sprite.collide_mask)
@@ -489,8 +496,7 @@ while game:
     if game == False:
         print(player.score)
         print(fim_screen(window))        
-        time.sleep(3)
-    
+        time.sleep(2)
         pygame.display.update()
-# ===== Finalização =====
-pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
+# ===== FinalizaÃ§Ã£o =====
+pygame.quit()  # FunÃ§Ã£o do PyGame que finaliza os recursos utilizados
