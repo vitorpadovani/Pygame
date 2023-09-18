@@ -17,6 +17,7 @@ HEIGHT = 650
 WIDTH_bala = 40
 HEIGHT_bala = 40
 WIDTH_bird = 43 
+#criar nomes pra altura e largura do espinho como forma de abstracao
 W_ESP = 40
 H_ESP = 40
 HEIGHT_bird = 53
@@ -75,6 +76,7 @@ perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-4
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
 fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
+#criar uma superclasse que tem caracteristicas em comum das subclasses como forma de coesao
 class Espinho(pygame.sprite.Sprite):
     def __init__(self, image, x_position):
         super().__init__()
