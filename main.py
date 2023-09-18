@@ -24,7 +24,6 @@ window = pygame.display.set_mode((480, 650))
 window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('Spikes!')
 
-
 # ---- Inicia assets 
 espinho_img_e = pygame.image.load('assets/img/espinho.png').convert_alpha()
 espinho_img_e = pygame.transform.scale(espinho_img_e, (H_ESP, W_ESP))
