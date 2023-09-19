@@ -407,7 +407,6 @@ while game:
             balinha_roxa.kill()
             balinha_roxa = None
 
-
     all_sprites.draw(window)
 
     hits = pygame.sprite.spritecollide(player, all_espinhos, True, pygame.sprite.collide_mask)
