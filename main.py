@@ -10,6 +10,7 @@ import time
 pygame.init() 
 pygame.mixer.init()
 
+
 # ----- Gera tela principal
 WIDTH = 480
 HEIGHT = 650
@@ -73,30 +74,25 @@ perdeu_sound = pygame.mixer.Sound('assets/sounds/mixkit-sad-game-over-trombone-4
 bala_sound = pygame.mixer.Sound('assets/sounds/mixkit-arcade-bonus-alert-767.wav')
 fonte_score = pygame.font.Font('assets/fonte/PressStart2P.ttf', 28)
 
-class Espinho_lado_esquerdo(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_e):
-        self.image = espinho_img_e
+#criar uma superclasse que tem caracteristicas em comum das subclasses como forma de coesao
+class Espinho(pygame.sprite.Sprite):
+    def __init__(self, image, x_position):
+        super().__init__()
+        self.image = image
         pygame.sprite.Sprite.__init__(self)
 
-        # Atualizando a posiÃ§Ã£o do espinho
-        # Sorteando a posiÃ§Ã£o do espinho
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = 0
+        self.rect.x = x_position
         self.rect.y = random.randint(40, HEIGHT-60)
 
-class Espinho_lado_direito(pygame.sprite.Sprite):
-    def __init__(self,espinho_img_d):
-        self.image = espinho_img_d
-        self.image = pygame.transform.flip(espinho_img_d,True,False)
-        pygame.sprite.Sprite.__init__(self)
+class Espinho_lado_esquerdo(Espinho):
+    def __init__(self, espinho_img_e):
+        super().__init__(espinho_img_e, 0)
 
-        # Atualizando a posiÃ§Ã£o do espinho
-        # Sorteando a posiÃ§Ã£o do espinho
-        self.rect = self.image.get_rect() 
-        self.mask = pygame.mask.from_surface(self.image)
-        self.rect.x = 440
-        self.rect.y = random.randint(40, HEIGHT-60)
+class Espinho_lado_direito(Espinho):
+    def __init__(self, espinho_img_d):
+        super().__init__(pygame.transform.flip(espinho_img_d, True, False), 440)
 
 class Espinho_pra_cima(pygame.sprite.Sprite):
     def __init__(self,espinho_img_cima,x):
@@ -406,6 +402,7 @@ while game:
             tempo3 = now1
             balinha_roxa.kill()
             balinha_roxa = None
+
 
     all_sprites.draw(window)
 
